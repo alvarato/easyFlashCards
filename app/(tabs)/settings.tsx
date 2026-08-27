@@ -8,7 +8,7 @@ import {
 } from "@/components/db/settingsDB";
 import { DownloadPromptButton } from "@/components/DownloadPromptButton";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import CustomButtom from "@/components/shared/utils/CustomButtom";
+import CustomButtom from "@/components/shared/utils/CustomButton";
 import CustomListCheckBox from "@/components/shared/utils/CustomListCheckbox";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";

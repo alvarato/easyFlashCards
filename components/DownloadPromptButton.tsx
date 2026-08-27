@@ -7,7 +7,7 @@ import { TFunction } from "i18next";
 import React from "react";
 import { View } from "react-native";
 import { useAlert } from "./shared/alerts/AlertProvider";
-import CustomButtom from "./shared/utils/CustomButtom";
+import CustomButtom from "./shared/utils/CustomButton";
 
 interface DownloadPromptButtonProps {
   t: TFunction;

@@ -1,5 +1,5 @@
 import { deckToCsv } from "@/components/csv/Csvtodeck";
-import CustomButtom from "@/components/shared/utils/CustomButtom";
+import CustomButtom from "@/components/shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { theme } from "@/styles/Theme";

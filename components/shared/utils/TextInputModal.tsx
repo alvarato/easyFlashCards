@@ -1,4 +1,4 @@
-import CustomButton from "@/components/shared/utils/CustomButtom";
+import CustomButton from "@/components/shared/utils/CustomButton";
 import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, TextInput, View } from "react-native";

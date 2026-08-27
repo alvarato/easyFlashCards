@@ -17,14 +17,17 @@ import {
   eliminarCard,
   obtenerCardsPorDeck,
   obtenerDeckPorId,
+  renombrarDeck,
 } from "@/components/db/cardsDB";
-import CustomButtom from "@/components/shared/utils/CustomButtom";
+import CustomButtom from "@/components/shared/utils/CustomButton";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
 import QuickForm from "@/components/shared/utils/QuickForm";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { theme } from "@/styles/Theme";
 import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
+import CustomButtonIcon from "@/components/shared/utils/CustomButtonIcon";
 
 interface CardListItem extends ObjetcIdValue {
   frente: string;
@@ -44,6 +47,7 @@ export default function EditDeckScreen() {
   const [cards, setCards] = useState<CardListItem[]>([]);
   const [quickFormEdit, setquickFormEdit] = useState<number | null>();
   const [quickFormNew, setquickFormNew] = useState<boolean>(false);
+  const [quickFormEditName, setQuickFormEditName] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState<string[]>();
 
   const loadData = useCallback(() => {
@@ -96,6 +100,16 @@ export default function EditDeckScreen() {
     loadData();
   };
 
+  const handleNameEdit = () => {
+    setQuickFormEditName(true);
+  };
+
+  const editName = (fields: string[]) => {
+    renombrarDeck(deckId, fields[0]);
+    setQuickFormEditName(false);
+    loadData();
+  };
+
   if (!deck) {
     return (
       <View style={globalStyles.container}>
@@ -116,7 +130,15 @@ export default function EditDeckScreen() {
           headerTintColor: theme.colors.textSecondary,
         }}
       />
-      <Text style={textStyles.textPrimaryL}>{deck.nombre}</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-around", gap: 8 }}>
+        <Text style={[textStyles.textPrimaryL,{maxWidth:"70%"}]}>{deck.nombre}</Text>
+        <CustomButtonIcon
+          name="pencil-outline"
+          size={theme.spacing.xl}
+          color={theme.colors.tertiary}
+          onPress={handleNameEdit} 
+        />
+      </View>
       <ScrollView style={globalStyles.container}>
         <CustomListItem
           items={cards}
@@ -152,6 +174,16 @@ export default function EditDeckScreen() {
           title={t("deck.edit.newCard")}
           onSubmit={handleNewCard}
           onCancel={() => setquickFormNew(false)}
+          t={t}
+        />
+      )}
+      {quickFormEditName && (
+        <QuickForm
+          fields={["title"]}
+          initialValues={[deck.nombre]}
+          title={t("deck.edit.nameForm")}
+          onSubmit={editName}
+          onCancel={() => setQuickFormEditName(false)}
           t={t}
         />
       )}

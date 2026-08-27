@@ -35,7 +35,8 @@
     "edit": {
       "form": "Edit Card",
       "title": "Edit Deck",
-      "newCard": "New Card"
+      "newCard": "New Card",
+      "nameForm":"New Title"
     },
     "button":{
       "check":"Check",
@@ -53,7 +54,8 @@
     "fields": {
       "front": "Front",
       "back": "Back",
-      "nameDeck": "Deck Name"
+      "nameDeck": "Deck Name",
+      "title": "title"
     }
   },
   "general": {

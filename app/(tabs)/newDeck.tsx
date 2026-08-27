@@ -1,6 +1,6 @@
 import { csvToDeck } from "@/components/csv/Csvtodeck";
 import { useAlert } from "@/components/shared/alerts/AlertProvider";
-import CustomButtom from "@/components/shared/utils/CustomButtom";
+import CustomButtom from "@/components/shared/utils/CustomButton";
 import QuickForm from "@/components/shared/utils/QuickForm";
 import ScanQR from "@/components/shared/utils/ScanQR";
 import { TextInputModal } from "@/components/shared/utils/TextInputModal";

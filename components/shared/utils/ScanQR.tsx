@@ -6,7 +6,7 @@ import {
 import { TFunction } from "i18next";
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CustomButtom from "./CustomButtom";
+import CustomButtom from "./CustomButton";
 interface Props {
   onScan: (data: string) => void;
   t: TFunction;

@@ -4,6 +4,8 @@ import { theme } from "@/styles/Theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useAlert } from "../alerts/AlertProvider";
+import CustomButtonIcon from "./CustomButtonIcon";
+import CustomButtonText from "./CustomButtonText";
 
 interface Props<T extends ObjetcIdValue> {
   items: T[];
@@ -54,16 +56,12 @@ export function CustomListItem<T extends ObjetcIdValue>({
         return (
           <View key={item.id} style={styles.row}>
             {onOpen ? (
-              <Pressable
+              <View style={styles.labelContainer}>
+              <CustomButtonText 
                 onPress={() => onOpen(item)}
-                style={({ pressed }) => [
-                  styles.labelContainer,
-                  pressed && styles.iconButtonPressed,
-                ]}
-                hitSlop={8}
-              >
-                <Text style={textStyles.textPrimaryM}>{displayValue}</Text>
-              </Pressable>
+                text={displayValue}
+              />
+              </View>
             ) : (
               <View style={styles.labelContainer}>
                 <Text style={textStyles.textPrimaryM}>{displayValue}</Text>
@@ -72,71 +70,39 @@ export function CustomListItem<T extends ObjetcIdValue>({
 
             <View style={styles.actions}>
               {onStar && (
-                <Pressable
-                  onPress={() => onStar(item)}
-                  style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.iconButtonPressed,
-                  ]}
-                  hitSlop={8}
-                >
-                  <Ionicons
+                <CustomButtonIcon
                     name={starred ? "star" : "star-outline"}
-                    size={20}
+                    size={theme.spacing.l}
                     color={theme.colors.accent}
-                  />
-                </Pressable>
+                    onPress={() => onStar(item)}
+                        />
               )}
 
               {onShare && (
-                <Pressable
-                  onPress={() => onShare(item)}
-                  style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.iconButtonPressed,
-                  ]}
-                  hitSlop={8}
-                >
-                  <Ionicons
+                <CustomButtonIcon
                     name="share-social-outline"
-                    size={20}
+                    size={theme.spacing.l}
                     color={theme.colors.primary}
-                  />
-                </Pressable>
+                    onPress={() => onShare(item)}
+                        />
               )}
 
               {onEdit && (
-                <Pressable
-                  onPress={() => onEdit(item)}
-                  style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.iconButtonPressed,
-                  ]}
-                  hitSlop={8}
-                >
-                  <Ionicons
+                 <CustomButtonIcon
                     name="pencil-outline"
-                    size={20}
+                    size={theme.spacing.l}
                     color={theme.colors.tertiary}
-                  />
-                </Pressable>
+                    onPress={() => onEdit(item)}
+                        />
               )}
 
               {onDelete && (
-                <Pressable
-                  onPress={() => handleOnDelete(item)}
-                  style={({ pressed }) => [
-                    styles.iconButton,
-                    pressed && styles.iconButtonPressed,
-                  ]}
-                  hitSlop={8}
-                >
-                  <Ionicons
+                <CustomButtonIcon
                     name="trash-outline"
                     size={20}
                     color={theme.colors.error}
-                  />
-                </Pressable>
+                    onPress={() => handleOnDelete(item)}
+                        />
               )}
             </View>
           </View>
@@ -174,8 +140,5 @@ const styles = StyleSheet.create({
   iconButton: {
     padding: theme.spacing.xs,
     borderRadius: 8,
-  },
-  iconButtonPressed: {
-    backgroundColor: theme.colors.background,
   },
 });

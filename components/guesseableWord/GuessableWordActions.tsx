@@ -1,6 +1,6 @@
 import { textStyles } from "@/styles/Texts";
 import { StyleSheet, Text, View } from "react-native";
-import CustomButtom from "../shared/utils/CustomButtom";
+import CustomButtom from "../shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
 
 type GuessableWordActionsProps = {
