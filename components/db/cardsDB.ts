@@ -70,6 +70,13 @@ export function eliminarDeck(deckId: number) {
   db.runSync("DELETE FROM decks WHERE id = ?;", [deckId]);
 }
 
+export function buscarDecksPorTitulo(query: string): Deck[] {
+  return db.getAllSync<Deck>(
+    "SELECT * FROM decks WHERE nombre LIKE ? ORDER BY creado_en DESC;",
+    [`%${query}%`],
+  );
+}
+
 // ---------------------------------------------
 // Cards: CRUD
 // ---------------------------------------------

@@ -1,6 +1,12 @@
 import { alertListItemButton } from "@/components/Clases";
-import { Deck, eliminarDeck, obtenerDecks } from "@/components/db/cardsDB";
+import {
+  buscarDecksPorTitulo,
+  Deck,
+  eliminarDeck,
+  obtenerDecks,
+} from "@/components/db/cardsDB";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
+import CustomSearchBar from "@/components/shared/utils/CustomSearchBar";
 import { globalStyles } from "@/styles/Styles";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
@@ -9,25 +15,30 @@ import { ScrollView, View } from "react-native";
 
 // CustomListItem espera objetos con { id, value } (ObjetcIdValue).
 // Deck trae { id, nombre, creado_en }, asi que lo adaptamos.
-type DeckItem = {
+export type DeckItem = {
   id: number;
   value: string;
   deck: Deck;
 };
 
-function deckToItem(deck: Deck): DeckItem {
-  return { id: deck.id, value: deck.nombre, deck };
+function toDeckItem(deck: Deck): DeckItem {
+  return {
+    id: deck.id,
+    value: deck.nombre,
+    deck,
+  };
 }
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const [items, setItems] = useState<DeckItem[]>([]);
-
+  const [decks, setDecks] = useState<DeckItem[]>([]); // lista original completa, ya mapeada
+  const [filteredDecks, setFilteredDecks] = useState<DeckItem[]>([]);
   const router = useRouter();
 
   const loadDecks = useCallback(() => {
-    const decks = obtenerDecks();
-    setItems(decks.map(deckToItem));
+    const todos = obtenerDecks().map(toDeckItem);
+    setDecks(todos);
+    setFilteredDecks(todos);
   }, []);
 
   const onDeleteAlet: alertListItemButton = {
@@ -67,9 +78,15 @@ export default function HomeScreen() {
 
   return (
     <View style={globalStyles.container}>
+      <CustomSearchBar
+        items={decks}
+        searchKeys={["value"]}
+        onResults={setFilteredDecks}
+        placeholder={t("deck.searchPlaceholder")}
+      />
       <ScrollView>
         <CustomListItem
-          items={items}
+          items={filteredDecks}
           onOpen={handleOpen}
           onEdit={handleEdit}
           onDelete={handleDelete}
