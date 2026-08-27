@@ -24,6 +24,9 @@ export const globalStyles = StyleSheet.create({
   centerContent: {
     justifyContent: "center",
   } as ViewStyle,
+  textCenter:{
+    textAlign:"center"
+  },
   genericViewButton: {
     justifyContent: "center",
     alignItems: "center",

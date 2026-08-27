@@ -37,6 +37,10 @@
       "title": "Edit Deck",
       "newCard": "New Card"
     },
+    "button":{
+      "check":"Check",
+      "showAnswer":"Show answer"
+    },
     "deckTooLargeForQR": "Deck is too large to generate a QR code",
     "shareAsQR": "Share as QR Code",
     "shareAsCsv": "Share as CSV",

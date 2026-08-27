@@ -13,9 +13,9 @@ export const theme = {
     textPrimary: "#F9F6EE", // Blanco casi puro
     textSecondary: "#ADB5BD", // Gris para textos de ayuda/descripciones
     //error: '#FF4D4D',
-    error: "#e74c3c",
+    error: "#c62828",
     border: "#333333",
-    good: "#27ae60", // Gris sutil para separar elementos,
+    good: "#2e7d32", // Gris sutil para separar elementos,
     pureWithe: "#ffffff",
   },
   spacing: {

@@ -1,6 +1,7 @@
 import { theme } from "@/styles/Theme";
 import { StyleSheet, Text, View } from "react-native";
 import { LineChar } from "./wordParser";
+import { textStyles } from "@/styles/Texts";
 
 type WordSlotsProps = {
   lines: LineChar[][];
@@ -23,14 +24,14 @@ export default function WordSlots({
             if (typedIndex === null) {
               return (
                 <View key={i} style={styles.slot}>
-                  <Text style={styles.letter}>{char}</Text>
+                  <Text style={textStyles.textSecondaryL}>{char}</Text>
                 </View>
               );
             }
             const typedChar = value[typedIndex];
             return (
               <View key={i} style={styles.slot}>
-                <Text style={[styles.letter, { color: letterColor }]}>
+                <Text style={[textStyles.textSecondaryL, { color: letterColor }]}>
                   {typedChar ?? ""}
                 </Text>
                 <View
@@ -58,12 +59,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 2,
     marginVertical: 4,
-  },
-  letter: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: theme.colors.textSecondary,
-    height: 24,
   },
   underline: {
     width: 16,

@@ -16,6 +16,8 @@ import WordSlots from "./WordSlots";
 type GuessableWordProps = {
   word: string;
   onComplete?: () => void;
+  textCheck:string;
+  textShowAnswer:string;
 };
 
 type FeedbackState = "idle" | "correct" | "incorrect";
@@ -23,6 +25,8 @@ type FeedbackState = "idle" | "correct" | "incorrect";
 export default function GuessableWord({
   word,
   onComplete,
+  textCheck,
+  textShowAnswer
 }: GuessableWordProps) {
   const [value, setValue] = useState("");
   const [feedback, setFeedback] = useState<FeedbackState>("idle");
@@ -71,16 +75,16 @@ export default function GuessableWord({
 
   const letterColor =
     feedback === "correct"
-      ? "#2e7d32"
+      ? theme.colors.good
       : feedback === "incorrect"
-        ? "#c62828"
+        ? theme.colors.error
         : theme.colors.textSecondary;
   const underlineColor = letterColor;
 
   return (
     <View>
       <AnimatedFeedback ref={feedbackRef} style={styles.container}>
-        <View style={styles.boxButtons}>
+        <View>
           <Pressable onPress={handlePressWord}>
             <WordSlots
               lines={lines}
@@ -106,6 +110,8 @@ export default function GuessableWord({
           firstTry={firstTry}
           showAnswer={showAnswer}
           solutionWord={solutionWord}
+          textCheck={textCheck}
+          textShowAnswer={textShowAnswer}
         />
       </AnimatedFeedback>
     </View>
@@ -121,8 +127,5 @@ const styles = StyleSheet.create({
     opacity: 0,
     height: 1,
     width: 1,
-  },
-  boxButtons: {
-    width: "100%",
   },
 });

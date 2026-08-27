@@ -12,10 +12,13 @@ import { textStyles } from "@/styles/Texts";
 import { theme } from "@/styles/Theme";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function DeckGameScreen() {
   const [settings, setSettings] = useState<Settings>();
+
+  const { t } = useTranslation();
 
   const loadSettings = useCallback(() => {
     const settings = obtenerConfigs();
@@ -41,6 +44,8 @@ export default function DeckGameScreen() {
       <GuessableWord
         word={reverso}
         onComplete={() => console.log("¡Correcto!")}
+        textCheck={t("deck.button.check")}
+        textShowAnswer={t("deck.button.showAnswer")}
       />
     );
   };
