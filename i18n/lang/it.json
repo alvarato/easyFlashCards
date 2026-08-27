@@ -1,0 +1,77 @@
+{
+  "home": {
+    "navigation": "Mazzi",
+    "title": "Mazzi",
+    "emptyDeck": "Nessun mazzo disponibile",
+    "askDeleteDeck": "Sei sicuro di voler eliminare questo mazzo?"
+  },
+  "settings": {
+    "navigation": "Impostazioni",
+    "languages": "Lingua",
+    "cards": {
+      "title": "Carte",
+      "random": "Carte casuali",
+      "read": "Modalità lettura",
+      "advance": "Algoritmo di studio"
+    }
+  },
+  "newDeck": {
+    "navigation": "Nuovo mazzo",
+    "scanQR": "Scansiona codice QR",
+    "createDeck": "Crea mazzo:",
+    "askCancelDeck": "Sei sicuro di voler annullare la creazione del mazzo?",
+    "pasteClipboard": "Incolla dagli appunti",
+    "exampleNewDeck": "titolo,esempio",
+    "insertDeckContent": "Inserisci il contenuto del mazzo",
+    "manualInput": "Incolla / Scrivi testo",
+    "form": {
+      "title": "Nuovo mazzo"
+    },
+    "deckCreated": "Mazzo creato con successo!",
+    "readCsv": "Importa CSV",
+    "newDeck": "Nuovo mazzo"
+  },
+  "deck": {
+    "edit": {
+      "form": "Modifica carta",
+      "title": "Modifica mazzo",
+      "newCard": "Nuova carta"
+    },
+    "deckTooLargeForQR": "Il mazzo è troppo grande per generare un codice QR",
+    "shareAsQR": "Condividi come codice QR",
+    "shareAsCsv": "Condividi come CSV",
+    "noCards": "Nessuna carta in questo mazzo",
+    "deckNotFound": "Errore: mazzo non trovato",
+    "newCard": "Nuova carta"
+  },
+  "quickForm": {
+    "required": "Questo campo è obbligatorio",
+    "fields": {
+      "front": "Fronte",
+      "back": "Retro",
+      "nameDeck": "Nome del mazzo"
+    }
+  },
+  "general": {
+    "getCameraPermiss": "Consenti accesso alla fotocamera",
+    "accept": "Accetta",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "back": "Indietro",
+    "copy": {
+      "prompt": "Copia prompt"
+    },
+    "download": {
+      "prompt": "Scarica prompt",
+      "alertTitle": "Scarica file",
+      "alertMessage": "Vuoi salvare il file prompt.txt sul tuo dispositivo?",
+      "errorMessage": "Impossibile scaricare il file",
+      "dialogTitle": "Scaricato"
+    },
+    "error": "❌ Errore",
+    "success": "✅ Confermato"
+  },
+  "select": {
+    "choiceAnOption": "Seleziona un'opzione"
+  }
+}

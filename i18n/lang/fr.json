@@ -1,0 +1,77 @@
+{
+  "home": {
+    "navigation": "Paquets",
+    "title": "Paquets",
+    "emptyDeck": "Aucun paquet disponible",
+    "askDeleteDeck": "Voulez-vous vraiment supprimer ce paquet ?"
+  },
+  "settings": {
+    "navigation": "Paramètres",
+    "languages": "Langue",
+    "cards": {
+      "title": "Cartes",
+      "random": "Cartes aléatoires",
+      "read": "Mode lecture",
+      "advance": "Algorithme d'apprentissage"
+    }
+  },
+  "newDeck": {
+    "navigation": "Nouveau paquet",
+    "scanQR": "Scanner le code QR",
+    "createDeck": "Créer un paquet :",
+    "askCancelDeck": "Voulez-vous vraiment annuler la création du paquet ?",
+    "pasteClipboard": "Coller depuis le presse-papiers",
+    "exampleNewDeck": "titre,exemple",
+    "insertDeckContent": "Saisir le contenu du paquet",
+    "manualInput": "Coller / Saisir du texte",
+    "form": {
+      "title": "Nouveau paquet"
+    },
+    "deckCreated": "Paquet créé avec succès !",
+    "readCsv": "Importer un CSV",
+    "newDeck": "Nouveau paquet"
+  },
+  "deck": {
+    "edit": {
+      "form": "Modifier la carte",
+      "title": "Modifier le paquet",
+      "newCard": "Nouvelle carte"
+    },
+    "deckTooLargeForQR": "Le paquet est trop volumineux pour un code QR",
+    "shareAsQR": "Partager sous forme de code QR",
+    "shareAsCsv": "Partager sous forme de CSV",
+    "noCards": "Aucune carte dans ce paquet pour l'instant",
+    "deckNotFound": "Erreur : paquet introuvable",
+    "newCard": "Nouvelle carte"
+  },
+  "quickForm": {
+    "required": "Ce champ est obligatoire",
+    "fields": {
+      "front": "Recto",
+      "back": "Verso",
+      "nameDeck": "Nom du paquet"
+    }
+  },
+  "general": {
+    "getCameraPermiss": "Autoriser l'accès à la caméra",
+    "accept": "Accepter",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "back": "Retour",
+    "copy": {
+      "prompt": "Copier le prompt"
+    },
+    "download": {
+      "prompt": "Télécharger le prompt",
+      "alertTitle": "Télécharger le fichier",
+      "alertMessage": "Voulez-vous enregistrer le fichier prompt.txt sur votre appareil ?",
+      "errorMessage": "Impossible de télécharger le fichier",
+      "dialogTitle": "Téléchargé"
+    },
+    "error": "❌ Erreur",
+    "success": "✅ Succès"
+  },
+  "select": {
+    "choiceAnOption": "Choisir une option"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "home": {
+    "navigation": "Baralhos",
+    "title": "Baralhos",
+    "emptyDeck": "Nenhum baralho disponível",
+    "askDeleteDeck": "Tem certeza de que deseja excluir este baralho?"
+  },
+  "settings": {
+    "navigation": "Configurações",
+    "languages": "Idioma",
+    "cards": {
+      "title": "Cartões",
+      "random": "Cartões aleatórios",
+      "read": "Modo de leitura",
+      "advance": "Algoritmo de estudo"
+    }
+  },
+  "newDeck": {
+    "navigation": "Novo baralho",
+    "scanQR": "Escanear código QR",
+    "createDeck": "Criar baralho:",
+    "askCancelDeck": "Tem certeza de que deseja cancelar a criação do baralho?",
+    "pasteClipboard": "Colar da área de transferência",
+    "exampleNewDeck": "título,exemplo",
+    "insertDeckContent": "Inserir conteúdo do baralho",
+    "manualInput": "Colar / Digitar texto",
+    "form": {
+      "title": "Novo baralho"
+    },
+    "deckCreated": "Baralho criado com sucesso!",
+    "readCsv": "Importar CSV",
+    "newDeck": "Novo baralho"
+  },
+  "deck": {
+    "edit": {
+      "form": "Editar cartão",
+      "title": "Editar baralho",
+      "newCard": "Novo cartão"
+    },
+    "deckTooLargeForQR": "O baralho é grande demais para gerar um código QR",
+    "shareAsQR": "Compartilhar como código QR",
+    "shareAsCsv": "Compartilhar como CSV",
+    "noCards": "Nenhum cartão neste baralho ainda",
+    "deckNotFound": "Erro: Baralho não encontrado",
+    "newCard": "Novo cartão"
+  },
+  "quickForm": {
+    "required": "Este campo é obrigatório",
+    "fields": {
+      "front": "Frente",
+      "back": "Verso",
+      "nameDeck": "Nome do baralho"
+    }
+  },
+  "general": {
+    "getCameraPermiss": "Permitir acesso à câmera",
+    "accept": "Aceitar",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "back": "Voltar",
+    "copy": {
+      "prompt": "Copiar prompt"
+    },
+    "download": {
+      "prompt": "Baixar prompt",
+      "alertTitle": "Baixar arquivo",
+      "alertMessage": "Deseja salvar o arquivo prompt.txt no seu dispositivo?",
+      "errorMessage": "Não foi possível baixar o arquivo",
+      "dialogTitle": "Baixado"
+    },
+    "error": "❌ Erro",
+    "success": "✅ Sucesso"
+  },
+  "select": {
+    "choiceAnOption": "Selecione uma opção"
+  }
+}

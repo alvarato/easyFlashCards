@@ -1,0 +1,55 @@
+Generate ONLY the CSV-formatted text followed by the final data indicated, wrapped in a plain text code block (using triple backticks with the text tag) so the user can copy it easily with a single click. Do not add introductions, explanations, greetings, or comments before or after the code block.
+
+PRELIMINARY INSTRUCTION:
+If the DATA TO GENERATE is incomplete (a field is missing or still contains brackets [ ] unfilled), DO NOT generate the CSV yet. Instead, ask the user to complete the data using exactly this numbered format (outside of any code block):
+
+Front language:
+Back language:
+Topic:
+Amount:
+Enclose in parentheses (optional):
+
+Only once the user has answered with all the required data, proceed to generate the CSV following the rules below.
+
+RULE FOR THE "Amount" FIELD:
+If the "Amount" field is a number, generate exactly that many cards.
+If the "Amount" field is a dash - (or left empty), decide yourself the appropriate number of cards needed to cover the topic completely and naturally, without repeating or missing relevant terms (e.g. if the topic is "pronoun + haben", generate one card per pronoun; if the topic is "days of the week", generate 7).
+
+Row 0 (Header/Title): The first line must include the topic name translated into [Back language], with this exact format:
+title,[Topic name in Back language]
+
+Starting from the second line, each row represents a card and must have exactly TWO columns separated by a single comma ,:
+Column 1: Term in [Front language].
+Column 2: Term in [Back language].
+
+Do not add any extra line after the last card. The CSV ends at the last card row — DO NOT include "Topic:" or "Amount:" lines.
+
+RULES FOR BOTH COLUMNS:
+Include the grammatical information necessary for each language (e.g. articles, singular/plural, tone, or relevant conjugation) in both Column 1 and Column 2, if the corresponding language requires it.
+DO NOT use commas , inside any column, to avoid creating extra columns in the CSV. Use other separators like dashes - or slashes / if you need to include extra details.
+
+RULES FOR THE USE OF PARENTHESES ():
+If the "Enclose in parentheses" field is specified, it indicates which part of the term must be enclosed in () — this is the "guessable" part the user will need to fill in (e.g. only the main word, only the article, only the ending/conjugation, etc.), leaving the rest of the term outside the parentheses and visible as-is.
+This field can apply to Column 1, Column 2, or both, depending on what is specified.
+If the "Enclose in parentheses" field is NOT specified, is set to "none", or is left empty, then NO part of any term should have parentheses; both columns are generated without () (default behavior).
+Parentheses can only be applied to the main word or segment being guessed, and must never break or partially enclose the - or / separators.
+
+OUTPUT FORMAT:
+The entire result (full CSV, including only title and cards) must be delivered inside a single plain text code block, with no text before or after it.
+
+EXPECTED OUTPUT EXAMPLE (Spanish → German, enclosing the main noun in Column 2):
+
+text
+title,Das Obst
+Manzana,der (Apfel) - (Äpfel)
+Pera,die (Birne) - (Birnen)
+Agua,das (Wasser) -
+
+DATA TO GENERATE:
+Front language: [Indicate the language of Column 1, e.g. Spanish, English, French, etc.]
+Back language: [Indicate the language of Column 2, e.g. Spanish, English, French, etc.]
+Topic: [Indicate the topic]
+Amount: [Indicate a number, or - to let it be determined automatically]
+Enclose in parentheses (optional): [Indicate which column(s) and which part of the term should be in (), e.g. "Column 2 - only the noun", "both columns - whole word". If omitted, no parentheses are used]
+
+example input: english,german,pronoun + haben,-,haben verb

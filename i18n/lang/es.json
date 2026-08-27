@@ -1,0 +1,77 @@
+{
+  "home": {
+    "navigation": "Mazos",
+    "title": "Mazos",
+    "emptyDeck": "No hay mazos disponibles",
+    "askDeleteDeck": "¿Estás seguro de que deseas eliminar este mazo?"
+  },
+  "settings": {
+    "navigation": "Ajustes",
+    "languages": "Idioma",
+    "cards": {
+      "title": "Tarjetas",
+      "random": "Tarjetas aleatorias",
+      "read": "Modo lectura",
+      "advance": "Algoritmo de estudio"
+    }
+  },
+  "newDeck": {
+    "navigation": "Nuevo Mazo",
+    "scanQR": "Escanear código QR",
+    "createDeck": "Crear mazo:",
+    "askCancelDeck": "¿Estás seguro de que deseas cancelar la creación del mazo?",
+    "pasteClipboard": "Pegar desde el portapapeles",
+    "exampleNewDeck": "título,ejemplo",
+    "insertDeckContent": "Ingresar contenido del mazo",
+    "manualInput": "Pegar / Escribir texto",
+    "form": {
+      "title": "Nuevo Mazo"
+    },
+    "deckCreated": "¡Mazo creado con éxito!",
+    "readCsv": "Importar CSV",
+    "newDeck": "Nuevo mazo"
+  },
+  "deck": {
+    "edit": {
+      "form": "Editar Tarjeta",
+      "title": "Editar Mazo",
+      "newCard": "Nueva tarjeta"
+    },
+    "deckTooLargeForQR": "El mazo es demasiado grande para generar un código QR",
+    "shareAsQR": "Compartir como código QR",
+    "shareAsCsv": "Compartir como CSV",
+    "noCards": "Aún no hay tarjetas en este mazo",
+    "deckNotFound": "Error: Mazo no encontrado",
+    "newCard": "Nueva tarjeta"
+  },
+  "quickForm": {
+    "required": "Este campo es obligatorio",
+    "fields": {
+      "front": "Frente",
+      "back": "Reverso",
+      "nameDeck": "Nombre del mazo"
+    }
+  },
+  "general": {
+    "getCameraPermiss": "Permitir acceso a la cámara",
+    "accept": "Aceptar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "back": "Volver",
+    "copy": {
+      "prompt": "Copiar prompt"
+    },
+    "download": {
+      "prompt": "Descargar prompt",
+      "alertTitle": "Descargar archivo",
+      "alertMessage": "¿Deseas guardar el archivo prompt.txt en tu dispositivo?",
+      "errorMessage": "No se pudo descargar el archivo",
+      "dialogTitle": "Descargado"
+    },
+    "error": "❌ Error",
+    "success": "✅ Éxito"
+  },
+  "select": {
+    "choiceAnOption": "Selecciona una opción"
+  }
+}
