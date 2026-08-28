@@ -1,3 +1,4 @@
+import { CommonStackScreen } from "@/components/CommonStackScreen";
 import { deckToCsv } from "@/components/csv/Csvtodeck";
 import CustomButtom from "@/components/shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
@@ -65,17 +66,7 @@ export default function ShareDeckScreen() {
 
   return (
     <View style={[globalStyles.container]}>
-      <Stack.Screen
-        options={{
-          title: deckName,
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: theme.colors.background,
-          },
-          headerTintColor: theme.colors.textSecondary,
-        }}
-      />
-
+      <CommonStackScreen title={deckName}/>
       {mode === "menu" && (
         <View style={[globalStyles.container, globalStyles.centerContent]}>
           {isTooLargeForQR && (

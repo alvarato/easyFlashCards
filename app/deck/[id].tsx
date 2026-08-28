@@ -1,5 +1,6 @@
 import Card from "@/components/Card";
 import Carrusel from "@/components/Carrucel";
+import { CommonStackScreen } from "@/components/CommonStackScreen";
 import {
   Card as CardData,
   obtenerCardsPorDeck,
@@ -52,16 +53,8 @@ export default function DeckGameScreen() {
 
   return (
     <View style={globalStyles.container}>
-      <Stack.Screen
-        options={{
-          title: nombreDeck,
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: theme.colors.background, // Color de fondo de la barra superior
-          },
-          headerTintColor: theme.colors.textSecondary,
-        }}
-      />
+
+      <CommonStackScreen title={nombreDeck}/>
 
       {cards.length === 0 ? (
         <Text style={textStyles.textPrimaryL}>

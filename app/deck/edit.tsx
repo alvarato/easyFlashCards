@@ -28,6 +28,7 @@ import { theme } from "@/styles/Theme";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButtonIcon from "@/components/shared/utils/CustomButtonIcon";
+import { CommonStackScreen } from "@/components/CommonStackScreen";
 
 interface CardListItem extends ObjetcIdValue {
   frente: string;
@@ -120,16 +121,8 @@ export default function EditDeckScreen() {
 
   return (
     <View style={globalStyles.container}>
-      <Stack.Screen
-        options={{
-          title: t("deck.edit.title"),
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: theme.colors.background, // Color de fondo de la barra superior
-          },
-          headerTintColor: theme.colors.textSecondary,
-        }}
-      />
+      <CommonStackScreen title={t("deck.edit.title")}/>
+      
       <View style={{ flexDirection: "row", justifyContent: "space-around", gap: 8 }}>
         <Text style={[textStyles.textPrimaryL,{maxWidth:"70%"}]}>{deck.nombre}</Text>
         <CustomButtonIcon
@@ -145,8 +138,8 @@ export default function EditDeckScreen() {
           onEdit={handleEditCard}
           onDelete={handleDeleteCard}
           alertOnDelete={{
-            title: "Delete Card",
-            text: "Are you sure you want to delete this card?",
+            title: t("deck.edit.delete"),
+            text: t("deck.edit.askDeleteDeck"),
           }}
           orderNumber={true}
           emptyMessage={t("deck.edit.noCards")}

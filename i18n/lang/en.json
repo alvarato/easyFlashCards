@@ -37,7 +37,9 @@
       "form": "Edit Card",
       "title": "Edit Deck",
       "newCard": "New Card",
-      "nameForm":"New Title"
+      "nameForm":"New Title",
+      "delete":"Delete Card",
+      "askDeleteDeck": "Are you sure you want to delete this card?"
     },
     "button":{
       "check":"Check",
