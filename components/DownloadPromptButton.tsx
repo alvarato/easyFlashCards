@@ -87,12 +87,6 @@ export const DownloadPromptButton: React.FC<DownloadPromptButtonProps> = ({
   return (
     <View style={globalStyles.flex1}>
       <CustomButtom
-        text={t("general.download.prompt")}
-        onPress={handleDownloadPrompt}
-        // Desactivamos la alerta nativa del CustomButtom para manejarla con AlertProvider
-        alert={false}
-      />
-      <CustomButtom
         text={t("general.copy.prompt")}
         onPress={handleCopyPrompt}
         alert={false}
@@ -100,3 +94,10 @@ export const DownloadPromptButton: React.FC<DownloadPromptButtonProps> = ({
     </View>
   );
 };
+
+      // <CustomButtom
+      //   text={t("general.download.prompt")}
+      //   onPress={handleDownloadPrompt}
+      //   // Desactivamos la alerta nativa del CustomButtom para manejarla con AlertProvider
+      //   alert={false}
+      // />

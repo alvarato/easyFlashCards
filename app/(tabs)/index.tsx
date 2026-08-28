@@ -82,7 +82,7 @@ export default function HomeScreen() {
         items={decks}
         searchKeys={["value"]}
         onResults={setFilteredDecks}
-        placeholder={t("deck.searchPlaceholder")}
+        placeholder={t("home.searchPlaceholder")}
       />
       <ScrollView>
         <CustomListItem

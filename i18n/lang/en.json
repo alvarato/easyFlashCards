@@ -3,7 +3,8 @@
     "navigation": "Decks",
     "title": "Decks",
     "emptyDeck": "No decks available",
-    "askDeleteDeck": "Are you sure you want to delete this deck?"
+    "askDeleteDeck": "Are you sure you want to delete this deck?",
+    "searchPlaceholder":"Search"
   },
   "settings": {
     "navigation": "Settings",

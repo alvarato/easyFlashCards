@@ -1,4 +1,4 @@
-import "@/components/db/initDB"; // Garantiza DB lista
+import "@/components/db/initDB";
 
 import { obtenerConfigs } from "@/components/db/settingsDB";
 import i18n from "@/i18n";
@@ -12,6 +12,7 @@ import "react-native-reanimated";
 
 import { AlertProvider } from "@/components/shared/alerts/AlertProvider";
 import { theme } from "@/styles/Theme";
+import SplashLogo from "@/components/SplashLogo";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -23,10 +24,10 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const [appLista, setAppLista] = useState(false);
+  const [splashTerminado, setSplashTerminado] = useState(false);
 
   useEffect(() => {
     try {
-      // 1. Ahora es seguro llamar a la DB porque la tabla 'settings' ya existe
       const config = obtenerConfigs();
       if (config?.language) {
         i18n.changeLanguage(config.language);
@@ -40,14 +41,27 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (appLista) {
+      // Oculta el splash NATIVO de expo apenas la data está lista
       SplashScreen.hideAsync().catch(() => {});
     }
   }, [appLista]);
 
+  // 1. Mientras carga la config, no renderiza nada (splash nativo sigue visible)
   if (!appLista) {
     return null;
   }
 
+  // 2. Config lista pero tu splash animado (JS) todavía no terminó
+  if (!splashTerminado) {
+    return (
+      <SplashLogo
+        duration={3000}
+        onFinish={() => setSplashTerminado(true)}
+      />
+    );
+  }
+
+  // 3. Splash terminado -> app normal
   return (
     <I18nextProvider i18n={i18n}>
       <AlertProvider>
