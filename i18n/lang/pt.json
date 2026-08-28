@@ -3,7 +3,8 @@
     "navigation": "Baralhos",
     "title": "Baralhos",
     "emptyDeck": "Nenhum baralho disponível",
-    "askDeleteDeck": "Tem certeza de que deseja excluir este baralho?"
+    "askDeleteDeck": "Tem certeza de que deseja excluir este baralho?",
+    "searchPlaceholder": "Pesquisar"
   },
   "settings": {
     "navigation": "Configurações",
@@ -22,7 +23,7 @@
     "askCancelDeck": "Tem certeza de que deseja cancelar a criação do baralho?",
     "pasteClipboard": "Colar da área de transferência",
     "exampleNewDeck": "título,exemplo",
-    "insertDeckContent": "Inserir conteúdo do baralho",
+    "insertDeckContent": "Digitar conteúdo do baralho",
     "manualInput": "Colar / Digitar texto",
     "form": {
       "title": "Novo baralho"
@@ -35,13 +36,20 @@
     "edit": {
       "form": "Editar cartão",
       "title": "Editar baralho",
-      "newCard": "Novo cartão"
+      "newCard": "Novo cartão",
+      "nameForm": "Novo título",
+      "delete": "Excluir cartão",
+      "askDeleteDeck": "Tem certeza de que deseja excluir este cartão?"
     },
-    "deckTooLargeForQR": "O baralho é grande demais para gerar um código QR",
+    "button": {
+      "check": "Verificar",
+      "showAnswer": "Mostrar resposta"
+    },
+    "deckTooLargeForQR": "O baralho é muito grande para gerar um código QR",
     "shareAsQR": "Compartilhar como código QR",
     "shareAsCsv": "Compartilhar como CSV",
     "noCards": "Nenhum cartão neste baralho ainda",
-    "deckNotFound": "Erro: Baralho não encontrado",
+    "deckNotFound": "❌ Error: Baralho não encontrado",
     "newCard": "Novo cartão"
   },
   "quickForm": {
@@ -49,7 +57,8 @@
     "fields": {
       "front": "Frente",
       "back": "Verso",
-      "nameDeck": "Nome do baralho"
+      "nameDeck": "Nome do baralho",
+      "title": "Título"
     }
   },
   "general": {
@@ -68,10 +77,10 @@
       "errorMessage": "Não foi possível baixar o arquivo",
       "dialogTitle": "Baixado"
     },
-    "error": "❌ Erro",
-    "success": "✅ Sucesso"
+    "error": "❌ Error",
+    "success": "✅ Éxito"
   },
   "select": {
-    "choiceAnOption": "Selecione uma opção"
+    "choiceAnOption": "Escolha uma opção"
   }
 }

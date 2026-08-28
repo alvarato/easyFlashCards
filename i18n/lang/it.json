@@ -3,7 +3,8 @@
     "navigation": "Mazzi",
     "title": "Mazzi",
     "emptyDeck": "Nessun mazzo disponibile",
-    "askDeleteDeck": "Sei sicuro di voler eliminare questo mazzo?"
+    "askDeleteDeck": "Sei sicuro di voler eliminare questo mazzo?",
+    "searchPlaceholder": "Cerca"
   },
   "settings": {
     "navigation": "Impostazioni",
@@ -20,10 +21,10 @@
     "scanQR": "Scansiona codice QR",
     "createDeck": "Crea mazzo:",
     "askCancelDeck": "Sei sicuro di voler annullare la creazione del mazzo?",
-    "pasteClipboard": "Incolla dagli appunti",
+    "pasteClipboard": "Incolla negli appunti",
     "exampleNewDeck": "titolo,esempio",
     "insertDeckContent": "Inserisci il contenuto del mazzo",
-    "manualInput": "Incolla / Scrivi testo",
+    "manualInput": "Incolla / Digita testo",
     "form": {
       "title": "Nuovo mazzo"
     },
@@ -35,13 +36,20 @@
     "edit": {
       "form": "Modifica carta",
       "title": "Modifica mazzo",
-      "newCard": "Nuova carta"
+      "newCard": "Nuova carta",
+      "nameForm": "Nuovo titolo",
+      "delete": "Elimina carta",
+      "askDeleteDeck": "Sei sicuro di voler eliminare questa carta?"
+    },
+    "button": {
+      "check": "Verifica",
+      "showAnswer": "Mostra risposta"
     },
     "deckTooLargeForQR": "Il mazzo è troppo grande per generare un codice QR",
     "shareAsQR": "Condividi come codice QR",
     "shareAsCsv": "Condividi come CSV",
     "noCards": "Nessuna carta in questo mazzo",
-    "deckNotFound": "Errore: mazzo non trovato",
+    "deckNotFound": "❌ Error: Mazzo non trovato",
     "newCard": "Nuova carta"
   },
   "quickForm": {
@@ -49,7 +57,8 @@
     "fields": {
       "front": "Fronte",
       "back": "Retro",
-      "nameDeck": "Nome del mazzo"
+      "nameDeck": "Nome del mazzo",
+      "title": "Titolo"
     }
   },
   "general": {
@@ -68,10 +77,10 @@
       "errorMessage": "Impossibile scaricare il file",
       "dialogTitle": "Scaricato"
     },
-    "error": "❌ Errore",
-    "success": "✅ Confermato"
+    "error": "❌ Error",
+    "success": "✅ Éxito"
   },
   "select": {
-    "choiceAnOption": "Seleziona un'opzione"
+    "choiceAnOption": "Scegli un'opzione"
   }
 }

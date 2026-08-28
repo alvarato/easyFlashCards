@@ -4,7 +4,7 @@
     "title": "Decks",
     "emptyDeck": "No decks available",
     "askDeleteDeck": "Are you sure you want to delete this deck?",
-    "searchPlaceholder":"Search"
+    "searchPlaceholder": "Search"
   },
   "settings": {
     "navigation": "Settings",
@@ -37,19 +37,19 @@
       "form": "Edit Card",
       "title": "Edit Deck",
       "newCard": "New Card",
-      "nameForm":"New Title",
-      "delete":"Delete Card",
+      "nameForm": "New Title",
+      "delete": "Delete Card",
       "askDeleteDeck": "Are you sure you want to delete this card?"
     },
-    "button":{
-      "check":"Check",
-      "showAnswer":"Show answer"
+    "button": {
+      "check": "Check",
+      "showAnswer": "Show answer"
     },
     "deckTooLargeForQR": "Deck is too large to generate a QR code",
     "shareAsQR": "Share as QR Code",
     "shareAsCsv": "Share as CSV",
     "noCards": "No cards in this deck yet",
-    "deckNotFound": "Error: Deck not found",
+    "deckNotFound": "❌ Error: Deck not found",
     "newCard": "New Card"
   },
   "quickForm": {
@@ -58,7 +58,7 @@
       "front": "Front",
       "back": "Back",
       "nameDeck": "Deck Name",
-      "title": "title"
+      "title": "Title"
     }
   },
   "general": {

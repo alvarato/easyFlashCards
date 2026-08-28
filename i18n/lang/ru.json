@@ -3,7 +3,8 @@
     "navigation": "Колоды",
     "title": "Колоды",
     "emptyDeck": "Нет доступных колод",
-    "askDeleteDeck": "Вы уверены, что хотите удалить эту колоду?"
+    "askDeleteDeck": "Вы уверены, что хотите удалить эту колоду?",
+    "searchPlaceholder": "Поиск"
   },
   "settings": {
     "navigation": "Настройки",
@@ -35,21 +36,29 @@
     "edit": {
       "form": "Редактировать карточку",
       "title": "Редактировать колоду",
-      "newCard": "Новая карточка"
+      "newCard": "Новая карточка",
+      "nameForm": "Новое название",
+      "delete": "Удалить карточку",
+      "askDeleteDeck": "Вы уверены, что хотите удалить эту карточку?"
     },
-    "deckTooLargeForQR": "Колода слишком большая для QR-кода",
+    "button": {
+      "check": "Проверить",
+      "showAnswer": "Показать ответ"
+    },
+    "deckTooLargeForQR": "Колода слишком большая для создания QR-кода",
     "shareAsQR": "Поделиться через QR-код",
-    "shareAsCsv": "Поделиться как CSV",
+    "shareAsCsv": "Поделиться в формате CSV",
     "noCards": "В этой колоде пока нет карточек",
-    "deckNotFound": "Ошибка: колода не найдена",
+    "deckNotFound": "❌ Error: Колода не найдена",
     "newCard": "Новая карточка"
   },
   "quickForm": {
     "required": "Это поле обязательно для заполнения",
     "fields": {
       "front": "Лицевая сторона",
-      "back": "Обратная сторона",
-      "nameDeck": "Название колоды"
+      "back": "Оборотная сторона",
+      "nameDeck": "Название колоды",
+      "title": "Название"
     }
   },
   "general": {
@@ -68,8 +77,8 @@
       "errorMessage": "Не удалось скачать файл",
       "dialogTitle": "Скачано"
     },
-    "error": "❌ Ошибка",
-    "success": "✅ Успешно"
+    "error": "❌ Error",
+    "success": "✅ Éxito"
   },
   "select": {
     "choiceAnOption": "Выберите вариант"

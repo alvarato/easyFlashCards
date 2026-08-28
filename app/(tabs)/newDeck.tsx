@@ -109,7 +109,15 @@ export default function NewDeckScreen() {
 
   // --- Pantalla de escaneo (mientras se usa la cámara) ---
   if (mode === "scanning") {
-    return <ScanQR onScan={readQR} t={t} />;
+    return<View style={globalStyles.container}>
+      <View style={globalStyles.flex1}>
+      <ScanQR onScan={readQR} t={t} />
+      </View>
+      <CustomButtom text={t('general.back')}
+        onPress={cleanVars}
+      ></CustomButtom>
+    </View>
+     ;
   }
 
   // --- Modal para escribir o pegar texto a mano ---
