@@ -103,6 +103,21 @@ export function eliminarCard(cardId: number) {
   db.runSync("DELETE FROM cards WHERE id = ?;", [cardId]);
 }
 
+export function rateCardSimple(cardId: number, correcto: boolean) {
+  if (!correcto) {
+    calificarCard(cardId, "otra_vez");
+    return;
+  }
+
+  const card = db.getFirstSync<Card>("SELECT * FROM cards WHERE id = ?;", [
+    cardId,
+  ]);
+
+  // Si ya tenía repeticiones (venía acertando), la subimos a "facil"
+  const calificacion = card && card.repeticiones > 0 ? "facil" : "bien";
+  calificarCard(cardId, calificacion);
+}
+
 export function editarCard(
   cardId: number,
   nuevoFrente: string,

@@ -1,6 +1,6 @@
 import { theme } from "@/styles/Theme";
 import { useRef, useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import AnimatedFeedback, {
     AnimatedFeedbackHandle,
 } from "../AnimatedFeedbackHandle";
@@ -12,12 +12,15 @@ import {
     parseDisplayChars,
 } from "./wordParser";
 import WordSlots from "./WordSlots";
+import { textStyles } from "@/styles/Texts";
+import { globalStyles } from "@/styles/Styles";
 
 type GuessableWordProps = {
   word: string;
   onComplete?: () => void;
   textCheck:string;
   textShowAnswer:string;
+  handleFeedback:(result: boolean) =>void;
 };
 
 type FeedbackState = "idle" | "correct" | "incorrect";
@@ -26,13 +29,15 @@ export default function GuessableWord({
   word,
   onComplete,
   textCheck,
-  textShowAnswer
+  textShowAnswer,
+  handleFeedback
 }: GuessableWordProps) {
   const [value, setValue] = useState("");
   const [feedback, setFeedback] = useState<FeedbackState>("idle");
   const inputRef = useRef<TextInput>(null);
   const feedbackRef = useRef<AnimatedFeedbackHandle>(null);
   const [firstTry, setFirstTry] = useState<boolean>(false);
+  const [sendedFeedback, setSendedFeedback] = useState<boolean>(false);
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
 
   const chars = parseDisplayChars(word);
@@ -42,6 +47,9 @@ export default function GuessableWord({
 
   const handleShowAnswer = () => {
     setShowAnswer(!showAnswer);
+    handleFeedback(false);
+    setSendedFeedback(true);
+    Keyboard.dismiss();
   };
 
   const handleChangeText = (text: string) => {
@@ -56,12 +64,14 @@ export default function GuessableWord({
     if (correct) {
       setFeedback("correct");
       feedbackRef.current?.success();
-      onComplete?.();
+      handleFeedback(true);
+      setSendedFeedback(true);
     } else {
       setFeedback("incorrect");
       feedbackRef.current?.shake();
     }
     setFirstTry(true);
+    Keyboard.dismiss();
   };
 
   // Fuerza que el teclado se reabra aunque el TextInput ya estuviera "focuseado"
@@ -103,16 +113,20 @@ export default function GuessableWord({
             />
           </Pressable>
         </View>
-
-        <GuessableWordActions
+        {
+          !sendedFeedback &&
+          <GuessableWordActions
           onSend={handleSend}
           onShowAnswer={handleShowAnswer}
           firstTry={firstTry}
-          showAnswer={showAnswer}
-          solutionWord={solutionWord}
           textCheck={textCheck}
           textShowAnswer={textShowAnswer}
         />
+        }
+        
+        {showAnswer && (
+        <Text style={[textStyles.textSecondaryL,globalStyles.textCenter]}>{solutionWord}</Text>
+      )}
       </AnimatedFeedback>
     </View>
   );
