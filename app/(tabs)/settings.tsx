@@ -2,19 +2,18 @@ import AnimatedFeedback, {
   AnimatedFeedbackHandle,
 } from "@/components/AnimatedFeedbackHandle";
 import {
-  getSettings,
   saveConfig,
+  getSettings,
   Settings,
 } from "@/components/db/settingsDB";
 import { DownloadPromptButton } from "@/components/DownloadPromptButton";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import CustomButtom from "@/components/shared/utils/CustomButton";
 import CustomListCheckBox from "@/components/shared/utils/CustomListCheckbox";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 // Helper to filter only the boolean properties of Settings
 const getCheckboxValues = (settings: Settings): Record<string, boolean> => {
@@ -39,16 +38,21 @@ export default function SettingsScreen() {
 
   const [settings, setSettings] = useState<Settings>(loadSettings);
 
-  const saveSettings = () => {
-    if (settings) {
-      saveConfig({ random: settings.random, read: settings.read });
-      feedbackRef.current?.success();
-    }
-  };
-
   const handleChange = (key: string, newValue: boolean) => {
     const settingsKey = key as keyof Settings;
-    setSettings((prev) => ({ ...prev, [settingsKey]: newValue }));
+
+    setSettings((prev) => {
+      const updated = { ...prev, [settingsKey]: newValue };
+
+      saveConfig({
+        random: updated.random,
+        read: updated.read,
+        advance: updated.advance,
+      });
+      feedbackRef.current?.success();
+
+      return updated;
+    });
   };
 
   const checkboxValues = getCheckboxValues(settings);
@@ -74,10 +78,6 @@ export default function SettingsScreen() {
       <Text style={textStyles.textPrimaryL}>{t("settings.languages")}</Text>
       <LanguageSwitcher />
       <DownloadPromptButton t={t} />
-
-      <View style={globalStyles.bottomContainer}>
-        <CustomButtom text={t("general.save")} onPress={saveSettings} />
-      </View>
     </AnimatedFeedback>
   );
 }
