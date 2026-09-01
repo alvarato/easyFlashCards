@@ -1,6 +1,5 @@
 import "@/components/db/initDB";
 
-import { obtenerConfigs } from "@/components/db/settingsDB";
 import i18n from "@/i18n";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -13,6 +12,7 @@ import "react-native-reanimated";
 import { AlertProvider } from "@/components/shared/alerts/AlertProvider";
 import { theme } from "@/styles/Theme";
 import SplashLogo from "@/components/SplashLogo";
+import { getSettings } from "@/components/db/settingsDB";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -28,7 +28,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     try {
-      const config = obtenerConfigs();
+      const config = getSettings();
       if (config?.language) {
         i18n.changeLanguage(config.language);
       }

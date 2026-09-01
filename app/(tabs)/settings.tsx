@@ -2,8 +2,8 @@ import AnimatedFeedback, {
   AnimatedFeedbackHandle,
 } from "@/components/AnimatedFeedbackHandle";
 import {
-  guardarConfig,
-  obtenerConfigs,
+  getSettings,
+  saveConfig,
   Settings,
 } from "@/components/db/settingsDB";
 import { DownloadPromptButton } from "@/components/DownloadPromptButton";
@@ -16,7 +16,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
-// Helper para filtrar solo las propiedades booleanas de Settings
+// Helper to filter only the boolean properties of Settings
 const getCheckboxValues = (settings: Settings): Record<string, boolean> => {
   const result: Record<string, boolean> = {};
 
@@ -34,14 +34,14 @@ export default function SettingsScreen() {
   const feedbackRef = useRef<AnimatedFeedbackHandle>(null);
 
   const loadSettings = (): Settings => {
-    return obtenerConfigs();
+    return getSettings();
   };
 
   const [settings, setSettings] = useState<Settings>(loadSettings);
 
   const saveSettings = () => {
     if (settings) {
-      guardarConfig({ random: settings.random, read: settings.read });
+      saveConfig({ random: settings.random, read: settings.read });
       feedbackRef.current?.success();
     }
   };

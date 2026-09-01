@@ -1,12 +1,12 @@
 import * as SQLite from "expo-sqlite";
 
 // ---------------------------------------------
-// Conexión
+// Connection
 // ---------------------------------------------
 const db = SQLite.openDatabaseSync("easyflashcards.db");
 
 // ---------------------------------------------
-// Tipos
+// Types
 // ---------------------------------------------
 export type Settings = {
   random: boolean;
@@ -21,9 +21,9 @@ export type Settings = {
 // ---------------------------------------------
 
 /**
- * Obtiene el objeto global de configuraciones.
+ * Gets the global settings object.
  */
-export function obtenerConfigs(): Settings {
+export function getSettings(): Settings {
   const row = db.getFirstSync<{
     random: number;
     read: number;
@@ -36,28 +36,28 @@ export function obtenerConfigs(): Settings {
     random: Boolean(row?.random ?? 0),
     read: Boolean(row?.read ?? 0),
     advance: Boolean(row?.advance ?? 0),
-    percentage: 100, // Siempre devolvemos 100 por regla de negocio
+    percentage: 100, // Always return 100 per business rule
     language: row?.language ?? "es",
   };
 }
 
 /**
- * Actualiza las configuraciones. Permite enviar solo los campos a cambiar.
+ * Updates the settings. Allows sending only the fields to change.
  */
-export function guardarConfig(nuevasConfigs: Partial<Settings>) {
-  const actuales = obtenerConfigs();
-  const actualizadas = { ...actuales, ...nuevasConfigs };
+export function saveConfig(newSettings: Partial<Settings>) {
+  const current = getSettings();
+  const updated = { ...current, ...newSettings };
 
   db.runSync(
     `UPDATE settings 
      SET random = ?, read = ?, advance = ?, percentage = ?, language = ?
      WHERE id = 1;`,
     [
-      actualizadas.random ? 1 : 0,
-      actualizadas.read ? 1 : 0,
-      actualizadas.advance ? 1 : 0,
-      100, // Se guarda siempre 100 en la base de datos
-      actualizadas.language ?? "es",
+      updated.random ? 1 : 0,
+      updated.read ? 1 : 0,
+      updated.advance ? 1 : 0,
+      100, // Always stored as 100 in the database
+      updated.language ?? "es",
     ],
   );
 }

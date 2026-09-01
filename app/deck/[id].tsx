@@ -7,7 +7,7 @@ import {
   getDeckById,
   rateCardSimple
 } from "@/components/db/cardsDB";
-import { obtenerConfigs, Settings } from "@/components/db/settingsDB";
+import { getSettings, Settings } from "@/components/db/settingsDB";
 import GuessableWord from "@/components/guesseableWord/GuessableWord";
 import CustomButton from "@/components/shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
@@ -53,7 +53,7 @@ export default function DeckGameScreen() {
   };
 
   useEffect(() => {
-    const setting = obtenerConfigs();
+    const setting = getSettings();
     setSettings(setting);
 
     const deck = getDeckById(deckId);
