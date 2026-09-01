@@ -5,7 +5,7 @@ import {
   Card as CardData,
   obtenerCardsPorDeck,
   obtenerDeckPorId,
-  rateCardSimple,
+  rateCardSimple
 } from "@/components/db/cardsDB";
 import { obtenerConfigs, Settings } from "@/components/db/settingsDB";
 import GuessableWord from "@/components/guesseableWord/GuessableWord";
@@ -13,7 +13,7 @@ import CustomButton from "@/components/shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
@@ -27,39 +27,41 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 };
 
 export default function DeckGameScreen() {
-  const [settings, setSettings] = useState<Settings>();
-  const carruselRef = useRef<CarruselHandle>(null);
-  const [canAdvance, setCanAdvance] = useState(false);
-
-  const handleFeedback = (result: boolean) => {
-    // acá tu lógica: guardar resultado, actualizar repetición espaciada, etc.
-    console.log(result); // true = bien, false = mal
-    setCanAdvance(true); // habilita el botón "Siguiente"
-    rateCardSimple(1,result)
-  };
-const handleNextCard = () => {
-  carruselRef.current?.goNext();
-  setCanAdvance(false);
-};
   const { t } = useTranslation();
-
-  const loadSettings = useCallback(() => {
-    setSettings(obtenerConfigs());
-  }, []);
-
   const { id } = useLocalSearchParams<{ id: string }>();
   const deckId = Number(id);
 
   const [nombreDeck, setNombreDeck] = useState("");
   const [cards, setCards] = useState<CardData[]>([]);
+  const [settings, setSettings] = useState<Settings>();
+  const [canAdvance, setCanAdvance] = useState(false);
+
+  const carruselRef = useRef<CarruselHandle>(null);
+
+  const handleFeedback = (result: boolean) => {
+    setCanAdvance(true);
+    const index = carruselRef.current?.getIndex();
+    const card:CardData = cards[Number(index)];
+    if (card != null){
+      rateCardSimple(card.id, result);
+    }
+  };
+
+  const handleNextCard = () => {
+    carruselRef.current?.goNext();
+    setCanAdvance(false);
+  };
 
   useEffect(() => {
+    const setting = obtenerConfigs();
+    setSettings(setting);
+
     const deck = obtenerDeckPorId(deckId);
     setNombreDeck(deck?.nombre ?? "Deck");
-    const CardsDB =(obtenerCardsPorDeck(deckId));
-    if(settings?.random) setCards(shuffleArray(CardsDB));
-    else setCards(CardsDB)
-    loadSettings();
+    const CardsDB = obtenerCardsPorDeck(deckId);
+
+    if (setting.random) setCards(shuffleArray(CardsDB));
+    else setCards(CardsDB);
   }, [deckId]);
 
   const getBackCard = (reverso: string): string | React.ReactNode => {
@@ -77,8 +79,7 @@ const handleNextCard = () => {
 
   return (
     <View style={globalStyles.container}>
-
-      <CommonStackScreen title={nombreDeck}/>
+      <CommonStackScreen title={nombreDeck} />
 
       {cards.length === 0 ? (
         <Text style={textStyles.textPrimaryL}>
@@ -93,15 +94,13 @@ const handleNextCard = () => {
               key={card.id}
               front={card.frente}
               back={getBackCard(card.reverso)}
-              
             />
           ))}
         />
       )}
-      { canAdvance &&
-        <CustomButton text={t("general.next")} onPress={handleNextCard}/>
-      }
-      
+      {canAdvance && (
+        <CustomButton text={t("general.next")} onPress={handleNextCard} />
+      )}
     </View>
   );
 }

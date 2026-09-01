@@ -32,6 +32,10 @@ const Carrusel = forwardRef<CarruselHandle, CarruselProps>(
       setIndex((prev) => (prev < total - 1 ? prev + 1 : prev));
     };
 
+    const getIndex = () => {
+      return index;
+    };
+
     useImperativeHandle(ref, () => ({
       goNext,
       goPrev,
