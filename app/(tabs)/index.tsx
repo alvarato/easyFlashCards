@@ -1,9 +1,8 @@
 import { alertListItemButton } from "@/components/Clases";
 import {
-  buscarDecksPorTitulo,
   Deck,
-  eliminarDeck,
-  obtenerDecks,
+  deleteDeck,
+  getDecks,
 } from "@/components/db/cardsDB";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
 import CustomSearchBar from "@/components/shared/utils/CustomSearchBar";
@@ -24,7 +23,7 @@ export type DeckItem = {
 function toDeckItem(deck: Deck): DeckItem {
   return {
     id: deck.id,
-    value: deck.nombre,
+    value: deck.name,
     deck,
   };
 }
@@ -36,7 +35,7 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const loadDecks = useCallback(() => {
-    const todos = obtenerDecks().map(toDeckItem);
+    const todos = getDecks().map(toDeckItem);
     setDecks(todos);
     setFilteredDecks(todos);
   }, []);
@@ -65,7 +64,7 @@ export default function HomeScreen() {
   };
 
   const handleDelete = (item: DeckItem) => {
-    eliminarDeck(item.id);
+    deleteDeck(item.id);
     loadDecks();
   };
 

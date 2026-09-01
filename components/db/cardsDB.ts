@@ -1,78 +1,78 @@
 import * as SQLite from "expo-sqlite";
 
 // ---------------------------------------------
-// Conexion a la base de datos
+// Database connection
 // ---------------------------------------------
 export const db = SQLite.openDatabaseSync("easyflashcards.db");
 
 // ---------------------------------------------
-// Migraciones
+// Migrations
 // ---------------------------------------------
-// Cada vez que cambies el esquema, agrega un nuevo bloque "if (version < N)"
-// y sube LATEST_VERSION. Nunca modifiques los bloques ya existentes.
+// Every time you change the schema, add a new "if (version < N)" block
+// and bump LATEST_VERSION. Never modify existing blocks.
 const LATEST_VERSION = 1;
 
 // ---------------------------------------------
-// Tipos
+// Types
 // ---------------------------------------------
 export type Deck = {
   id: number;
-  nombre: string;
-  creado_en: string;
+  name: string;
+  createdAt: string;
 };
 
 export interface DeckObject {
   id: number;
-  nombre: string;
-  creado_en: string;
+  name: string;
+  createdAt: string;
 }
 
 export type Card = {
   id: number;
-  deck_id: number;
-  frente: string;
-  reverso: string;
-  intervalo: number;
-  facilidad: number;
-  repeticiones: number;
-  proximo_repaso: string;
-  creado_en: string;
+  deckId: number;
+  front: string;
+  back: string;
+  interval: number;
+  easeFactor: number;
+  repetitions: number;
+  nextReview: string;
+  createdAt: string;
 };
 
-// Calificacion que da el usuario al repasar una card
-export type Calificacion = "otra_vez" | "dificil" | "bien" | "facil";
+// Rating the user gives a card during review
+export type Rating = "again" | "hard" | "good" | "easy";
 
 // ---------------------------------------------
 // Decks: CRUD
 // ---------------------------------------------
-export function crearDeck(nombre: string): number {
-  const result = db.runSync("INSERT INTO decks (nombre) VALUES (?);", [nombre]);
+export function createDeck(name: string): number {
+  const result = db.runSync("INSERT INTO decks (name) VALUES (?);", [name]);
   return result.lastInsertRowId;
 }
 
-export function obtenerDecks(): Deck[] {
-  return db.getAllSync<Deck>("SELECT * FROM decks ORDER BY creado_en DESC;");
+export function getDecks(): Deck[] {
+  return db.getAllSync<Deck>("SELECT * FROM decks ORDER BY createdAt DESC;");
 }
 
-export function obtenerDeckPorId(deckId: number): Deck | null {
+export function getDeckById(deckId: number): Deck | null {
   return db.getFirstSync<Deck>("SELECT * FROM decks WHERE id = ?;", [deckId]);
 }
 
-export function renombrarDeck(deckId: number, nuevoNombre: string) {
-  db.runSync("UPDATE decks SET nombre = ? WHERE id = ?;", [
-    nuevoNombre,
+export function renameDeck(deckId: number, newName: string) {
+  db.runSync("UPDATE decks SET name = ? WHERE id = ?;", [
+    newName,
     deckId,
   ]);
 }
 
-export function eliminarDeck(deckId: number) {
-  // Gracias al ON DELETE CASCADE, las cards del deck se borran solas
+export function deleteDeck(deckId: number) {
+  // Thanks to ON DELETE CASCADE, the deck's cards are removed automatically
   db.runSync("DELETE FROM decks WHERE id = ?;", [deckId]);
 }
 
-export function buscarDecksPorTitulo(query: string): Deck[] {
+export function searchDecksByTitle(query: string): Deck[] {
   return db.getAllSync<Deck>(
-    "SELECT * FROM decks WHERE nombre LIKE ? ORDER BY creado_en DESC;",
+    "SELECT * FROM decks WHERE name LIKE ? ORDER BY createdAt DESC;",
     [`%${query}%`],
   );
 }
@@ -80,32 +80,32 @@ export function buscarDecksPorTitulo(query: string): Deck[] {
 // ---------------------------------------------
 // Cards: CRUD
 // ---------------------------------------------
-export function crearCard(
+export function createCard(
   deckId: number,
-  frente: string,
-  reverso: string,
+  front: string,
+  back: string,
 ): number {
   const result = db.runSync(
-    "INSERT INTO cards (deck_id, frente, reverso) VALUES (?, ?, ?);",
-    [deckId, frente, reverso],
+    "INSERT INTO cards (deckId, front, back) VALUES (?, ?, ?);",
+    [deckId, front, back],
   );
   return result.lastInsertRowId;
 }
 
-export function obtenerCardsPorDeck(deckId: number): Card[] {
+export function getCardsByDeck(deckId: number): Card[] {
   return db.getAllSync<Card>(
-    "SELECT * FROM cards WHERE deck_id = ? ORDER BY id ASC;",
+    "SELECT * FROM cards WHERE deckId = ? ORDER BY id ASC;",
     [deckId],
   );
 }
 
-export function eliminarCard(cardId: number) {
+export function deleteCard(cardId: number) {
   db.runSync("DELETE FROM cards WHERE id = ?;", [cardId]);
 }
 
-export function rateCardSimple(cardId: number, correcto: boolean) {
-  if (!correcto) {
-    calificarCard(cardId, "otra_vez");
+export function rateCardSimple(cardId: number, correct: boolean) {
+  if (!correct) {
+    rateCard(cardId, "again");
     return;
   }
 
@@ -113,100 +113,100 @@ export function rateCardSimple(cardId: number, correcto: boolean) {
     cardId,
   ]);
 
-  // Si ya tenía repeticiones (venía acertando), la subimos a "facil"
-  const calificacion = card && card.repeticiones > 0 ? "facil" : "bien";
-  calificarCard(cardId, calificacion);
+  // If it already had repetitions (was being answered correctly), bump it to "easy"
+  const rating = card && card.repetitions > 0 ? "easy" : "good";
+  rateCard(cardId, rating);
 }
 
-export function editarCard(
+export function editCard(
   cardId: number,
-  nuevoFrente: string,
-  nuevoReverso: string,
+  newFront: string,
+  newBack: string,
 ) {
-  db.runSync("UPDATE cards SET frente = ?, reverso = ? WHERE id = ?;", [
-    nuevoFrente,
-    nuevoReverso,
+  db.runSync("UPDATE cards SET front = ?, back = ? WHERE id = ?;", [
+    newFront,
+    newBack,
     cardId,
   ]);
 }
 
-// Insertar varias cards de una vez (ideal para import CSV)
-export function crearCardsDesdeCSV(
+// Insert several cards at once (ideal for CSV import)
+export function createCardsFromCSV(
   deckId: number,
-  filas: { frente: string; reverso: string }[],
+  rows: { front: string; back: string }[],
 ) {
   db.withTransactionSync(() => {
-    for (const fila of filas) {
+    for (const row of rows) {
       db.runSync(
-        "INSERT INTO cards (deck_id, frente, reverso) VALUES (?, ?, ?);",
-        [deckId, fila.frente, fila.reverso],
+        "INSERT INTO cards (deckId, front, back) VALUES (?, ?, ?);",
+        [deckId, row.front, row.back],
       );
     }
   });
 }
 
 // ---------------------------------------------
-// Estudio: repaso espaciado (SM-2 simplificado)
+// Study: spaced repetition (simplified SM-2)
 // ---------------------------------------------
 
-// Cards que ya tocan repasar hoy (o antes)
-export function obtenerCardsParaRepasar(deckId: number): Card[] {
+// Cards that are due for review today (or earlier)
+export function getCardsToReview(deckId: number): Card[] {
   return db.getAllSync<Card>(
     `SELECT * FROM cards
-     WHERE deck_id = ? AND proximo_repaso <= datetime('now')
-     ORDER BY proximo_repaso ASC;`,
+     WHERE deckId = ? AND nextReview <= datetime('now')
+     ORDER BY nextReview ASC;`,
     [deckId],
   );
 }
 
-// Aplica el algoritmo SM-2 y guarda el resultado en la card
-export function calificarCard(cardId: number, calificacion: Calificacion) {
+// Applies the SM-2 algorithm and saves the result on the card
+export function rateCard(cardId: number, rating: Rating) {
   const card = db.getFirstSync<Card>("SELECT * FROM cards WHERE id = ?;", [
     cardId,
   ]);
   if (!card) return;
 
-  const { intervalo, facilidad, repeticiones } = card;
+  const { interval, easeFactor, repetitions } = card;
 
-  const notas: Record<Calificacion, number> = {
-    otra_vez: 0,
-    dificil: 3,
-    bien: 4,
-    facil: 5,
+  const scores: Record<Rating, number> = {
+    again: 0,
+    hard: 3,
+    good: 4,
+    easy: 5,
   };
-  const q = notas[calificacion];
+  const q = scores[rating];
 
-  let nuevaFacilidad = facilidad + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
-  if (nuevaFacilidad < 1.3) nuevaFacilidad = 1.3;
+  let newEaseFactor = easeFactor + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02));
+  if (newEaseFactor < 1.3) newEaseFactor = 1.3;
 
-  let nuevasRepeticiones: number;
-  let nuevoIntervalo: number;
+  let newRepetitions: number;
+  let newInterval: number;
 
   if (q < 3) {
-    // Fallo: se reinicia el conteo, vuelve a verse pronto
-    nuevasRepeticiones = 0;
-    nuevoIntervalo = 1;
+    // Failure: reset the count, review again soon
+    newRepetitions = 0;
+    newInterval = 1;
   } else {
-    nuevasRepeticiones = repeticiones + 1;
-    if (nuevasRepeticiones === 1) {
-      nuevoIntervalo = 1;
-    } else if (nuevasRepeticiones === 2) {
-      nuevoIntervalo = 6;
+    newRepetitions = repetitions + 1;
+    if (newRepetitions === 1) {
+      newInterval = 1;
+    } else if (newRepetitions === 2) {
+      newInterval = 6;
     } else {
-      nuevoIntervalo = Math.round(intervalo * nuevaFacilidad);
+      newInterval = Math.round(interval * newEaseFactor);
     }
   }
 
   db.runSync(
     `UPDATE cards
-     SET intervalo = ?, facilidad = ?, repeticiones = ?,
-         proximo_repaso = datetime('now', '+' || ? || ' days')
+     SET interval = ?, easeFactor = ?, repetitions = ?,
+         nextReview = datetime('now', '+' || ? || ' days')
      WHERE id = ?;`,
     [
-      nuevoIntervalo,
-      nuevaFacilidad,
-      nuevasRepeticiones,
-      nuevoIntervalo,
+      newInterval,
+      newEaseFactor,
+      newRepetitions,
+      newInterval,
       cardId,
     ],
   );

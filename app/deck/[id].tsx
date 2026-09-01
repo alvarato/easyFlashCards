@@ -3,8 +3,8 @@ import Carrusel, { CarruselHandle } from "@/components/Carrucel";
 import { CommonStackScreen } from "@/components/CommonStackScreen";
 import {
   Card as CardData,
-  obtenerCardsPorDeck,
-  obtenerDeckPorId,
+  getCardsByDeck,
+  getDeckById,
   rateCardSimple
 } from "@/components/db/cardsDB";
 import { obtenerConfigs, Settings } from "@/components/db/settingsDB";
@@ -56,9 +56,9 @@ export default function DeckGameScreen() {
     const setting = obtenerConfigs();
     setSettings(setting);
 
-    const deck = obtenerDeckPorId(deckId);
-    setNombreDeck(deck?.nombre ?? "Deck");
-    const CardsDB = obtenerCardsPorDeck(deckId);
+    const deck = getDeckById(deckId);
+    setNombreDeck(deck?.name ?? "Deck");
+    const CardsDB = getCardsByDeck(deckId);
 
     if (setting.random) setCards(shuffleArray(CardsDB));
     else setCards(CardsDB);
@@ -92,8 +92,8 @@ export default function DeckGameScreen() {
           items={cards.map((card) => (
             <Card
               key={card.id}
-              front={card.frente}
-              back={getBackCard(card.reverso)}
+              front={card.front}
+              back={getBackCard(card.back)}
             />
           ))}
         />

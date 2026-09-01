@@ -1,86 +1,86 @@
 import {
-  crearCardsDesdeCSV,
-  crearDeck,
-  obtenerCardsPorDeck,
-  obtenerDeckPorId,
+  createCardsFromCSV,
+  createDeck,
+  getCardsByDeck,
+  getDeckById,
 } from "../db/cardsDB";
 
-type FilaCSV = { frente: string; reverso: string };
+type CSVRow = { front: string; back: string };
 
-type CSVParseado = {
-  tituloDetectado: string | null;
-  filas: FilaCSV[];
+type ParsedCSV = {
+  detectedTitle: string | null;
+  rows: CSVRow[];
 };
 
 /**
- * Parsea el texto CSV y separa el título (si la primera fila es "title,NombreDeck")
- * de las filas de cards. No crea nada en la base de datos todavía.
+ * Parses the CSV text and separates the title (if the first row is "title,DeckName")
+ * from the card rows. Doesn't create anything in the database yet.
  */
-export function parsearCSV(csvTexto: string): CSVParseado {
-  const lineas = csvTexto
+export function parseCSV(csvText: string): ParsedCSV {
+  const lines = csvText
     .split("\n")
-    .map((linea) => linea.trim())
-    .filter((linea) => linea.length > 0)
-    .map((linea) => linea.split(","));
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .map((line) => line.split(","));
 
-  let tituloDetectado: string | null = null;
-  let filasCrudas = lineas;
+  let detectedTitle: string | null = null;
+  let rawRows = lines;
 
-  // Si la primera fila es "title,NombreDelDeck", se toma como título automático
-  const primeraFila = lineas[0];
-  if (primeraFila && primeraFila[0]?.trim().toLowerCase() === "title") {
-    tituloDetectado = primeraFila[1]?.trim() ?? null;
-    filasCrudas = lineas.slice(1);
+  // If the first row is "title,DeckName", it's taken as the automatic title
+  const firstRow = lines[0];
+  if (firstRow && firstRow[0]?.trim().toLowerCase() === "title") {
+    detectedTitle = firstRow[1]?.trim() ?? null;
+    rawRows = lines.slice(1);
   }
 
-  const filas = filasCrudas
+  const rows = rawRows
     .filter((cols) => cols[0]?.trim() && cols[1]?.trim())
     .map((cols) => ({
-      frente: cols[0].trim(),
-      reverso: cols[1].trim(),
+      front: cols[0].trim(),
+      back: cols[1].trim(),
     }));
 
-  return { tituloDetectado, filas };
+  return { detectedTitle, rows };
 }
 
 /**
- * Crea el deck + cards a partir del CSV ya parseado.
- * Si el CSV traía "title", nombreManual se ignora (podés pasar undefined).
- * Si no traía "title", nombreManual es obligatorio.
+ * Creates the deck + cards from an already-parsed CSV.
+ * If the CSV had a "title" row, manualName is ignored (you can pass undefined).
+ * If it didn't, manualName is required.
  */
-export function csvToDeck(csvTexto: string, nombreManual?: string): number {
-  const { tituloDetectado, filas } = parsearCSV(csvTexto);
+export function csvToDeck(csvText: string, manualName?: string): number {
+  const { detectedTitle, rows } = parseCSV(csvText);
 
-  const nombreFinal = tituloDetectado ?? nombreManual;
-  if (!nombreFinal) {
+  const finalName = detectedTitle ?? manualName;
+  if (!finalName) {
     throw new Error(
-      "El CSV no tiene título automático. Debés indicar un nombre para el deck.",
+      "The CSV has no automatic title. You must provide a name for the deck.",
     );
   }
 
-  const deckId = crearDeck(nombreFinal);
-  crearCardsDesdeCSV(deckId, filas);
+  const deckId = createDeck(finalName);
+  createCardsFromCSV(deckId, rows);
 
   return deckId;
 }
 
 /**
- * Convierte las cartas de un deck a un string CSV.
- * La primera fila contiene: title, <nombreDeck>
+ * Converts a deck's cards into a CSV string.
+ * The first row contains: title, <deckName>
  */
 export function deckToCsv(deckId: number): string | null {
-  const deck = obtenerDeckPorId(deckId);
+  const deck = getDeckById(deckId);
   if (!deck) return null;
 
-  const cards = obtenerCardsPorDeck(deckId);
+  const cards = getCardsByDeck(deckId);
 
-  // Fila de encabezado con el título del deck
-  const lineas = [`title,${deck.nombre}`];
+  // Header row with the deck's title
+  const lines = [`title,${deck.name}`];
 
-  // Filas con frente y reverso de cada carta
+  // Rows with front and back of each card
   for (const card of cards) {
-    lineas.push(`${card.frente},${card.reverso}`);
+    lines.push(`${card.front},${card.back}`);
   }
 
-  return lineas.join("\n");
+  return lines.join("\n");
 }

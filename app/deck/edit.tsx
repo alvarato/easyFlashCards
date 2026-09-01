@@ -11,13 +11,13 @@ import { ObjetcIdValue } from "@/components/Clases";
 
 import {
   Card,
-  crearCard,
+  createCard,
   Deck,
-  editarCard,
-  eliminarCard,
-  obtenerCardsPorDeck,
-  obtenerDeckPorId,
-  renombrarDeck,
+  deleteCard,
+  editCard,
+  getCardsByDeck,
+  getDeckById,
+  renameDeck,
 } from "@/components/db/cardsDB";
 import CustomButtom from "@/components/shared/utils/CustomButton";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
@@ -31,8 +31,8 @@ import CustomButtonIcon from "@/components/shared/utils/CustomButtonIcon";
 import { CommonStackScreen } from "@/components/CommonStackScreen";
 
 interface CardListItem extends ObjetcIdValue {
-  frente: string;
-  reverso: string;
+  front: string;
+  back: string;
   deck_id: number;
 }
 
@@ -56,17 +56,17 @@ export default function EditDeckScreen() {
     if (!deckId) return;
 
     // 1. Retrieve deck details
-    const currentDeck = obtenerDeckPorId(deckId);
+    const currentDeck = getDeckById(deckId);
     setDeck(currentDeck);
 
     // 2. Fetch and format cards for CustomListItem
-    const cardsDB: Card[] = obtenerCardsPorDeck(deckId);
+    const cardsDB: Card[] = getCardsByDeck(deckId);
     const formattedCards: CardListItem[] = cardsDB.map((card) => ({
       id: card.id,
-      value: card.frente,
-      frente: card.frente,
-      reverso: card.reverso,
-      deck_id: card.deck_id,
+      value: card.front,
+      front: card.front,
+      back: card.back,
+      deck_id: card.id,
     }));
 
     setCards(formattedCards);
@@ -80,23 +80,23 @@ export default function EditDeckScreen() {
   );
 
   const handleDeleteCard = (item: CardListItem) => {
-    eliminarCard(Number(item.id));
+    deleteCard(Number(item.id));
     loadData();
   };
 
   const handleEditCard = (item: CardListItem) => {
     setquickFormEdit(Number(item.id));
-    setInitialValues([item.frente, item.reverso]);
+    setInitialValues([item.front, item.back]);
   };
 
   const handleNewCard = (fields: string[]) => {
-    crearCard(deckId, fields[0], fields[1]);
+    createCard(deckId, fields[0], fields[1]);
     setquickFormNew(false);
     loadData();
   };
 
-  const editCard = (fields: string[]) => {
-    if (quickFormEdit != null) editarCard(quickFormEdit, fields[0], fields[1]);
+  const sendEditCard = (fields: string[]) => {
+    if (quickFormEdit != null) editCard(quickFormEdit, fields[0], fields[1]);
     setquickFormEdit(null);
     loadData();
   };
@@ -106,7 +106,7 @@ export default function EditDeckScreen() {
   };
 
   const editName = (fields: string[]) => {
-    renombrarDeck(deckId, fields[0]);
+    renameDeck(deckId, fields[0]);
     setQuickFormEditName(false);
     loadData();
   };
@@ -124,7 +124,7 @@ export default function EditDeckScreen() {
       <CommonStackScreen title={t("deck.edit.title")}/>
       
       <View style={{ flexDirection: "row", justifyContent: "space-around", gap: 8 }}>
-        <Text style={[textStyles.textPrimaryL,{maxWidth:"70%"}]}>{deck.nombre}</Text>
+        <Text style={[textStyles.textPrimaryL,{maxWidth:"70%"}]}>{deck.name}</Text>
         <CustomButtonIcon
           name="pencil-outline"
           size={theme.spacing.xl}
@@ -155,7 +155,7 @@ export default function EditDeckScreen() {
           fields={["front", "back"]}
           initialValues={initialValues}
           title={t("deck.edit.form")}
-          onSubmit={editCard}
+          onSubmit={sendEditCard}
           onCancel={() => setquickFormEdit(null)}
           t={t}
         />
@@ -173,7 +173,7 @@ export default function EditDeckScreen() {
       {quickFormEditName && (
         <QuickForm
           fields={["title"]}
-          initialValues={[deck.nombre]}
+          initialValues={[deck.name]}
           title={t("deck.edit.nameForm")}
           onSubmit={editName}
           onCancel={() => setQuickFormEditName(false)}

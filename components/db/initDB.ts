@@ -9,11 +9,12 @@ export function initDatabase() {
   const row = db.getFirstSync<{ user_version: number }>("PRAGMA user_version;");
   let currentVersion = row?.user_version ?? 0;
 
-  console.log("🔍 DB version actual:", currentVersion); // <-- agregá esto
+  console.log("🔍 Current DB version:", currentVersion);
 
-  // ... resto igual
-
-  // Versión 1: Tablas iniciales
+  // Version 1: Initial tables
+  // NOTE: kept exactly as originally shipped (Spanish column names).
+  // Do NOT rename columns here — apps already on v1 ran this as-is.
+  // The rename to English happens in version 4 below.
   if (currentVersion < 1) {
     db.execSync(`
       CREATE TABLE IF NOT EXISTS decks (
@@ -39,7 +40,8 @@ export function initDatabase() {
     db.execSync(`PRAGMA user_version = 1;`);
   }
 
-  // Versión 2: Configuración del sistema
+  // Version 2: System settings
+  // NOTE: kept exactly as originally shipped. Do not modify.
   if (currentVersion < 2) {
     db.execSync(`
       CREATE TABLE IF NOT EXISTS settings (
@@ -60,14 +62,17 @@ export function initDatabase() {
         `ALTER TABLE settings ADD COLUMN language TEXT DEFAULT 'es';`,
       );
     } catch (e) {
-      // Ignorar si la columna ya existía
+      // Ignore if the column already existed
     }
 
     currentVersion = 2;
     db.execSync(`PRAGMA user_version = 2;`);
   }
 
-  // Versión 3: Deck de ejemplo (se inserta una única vez, en la migración)
+  // Version 3: Example deck (inserted only once, during migration)
+  // NOTE: kept exactly as originally shipped (still uses the Spanish
+  // column names nombre/frente/reverso, since at this point in the
+  // migration chain those are still the real column names). Do not modify.
   if (currentVersion < 3) {
     const exampleCards: [string, string][] = [
       ["Hello", "Hola"],
@@ -104,11 +109,40 @@ export function initDatabase() {
         insertCard.finalizeSync();
       }
     }
-    console.log("✅ Deck de ejemplo insertado, deckRow:", deckRow); // <-- agregá esto
+    console.log("✅ Example deck inserted, deckRow:", deckRow);
     currentVersion = 3;
     db.execSync(`PRAGMA user_version = 3;`);
   }
+
+  // Version 4: Standardize column names to English
+  // Renames the legacy Spanish columns to their English equivalents so the
+  // schema matches the rest of the codebase (db.ts, csv.ts, etc.).
+  // - Fresh installs: still go through v1→v3 first (creating the Spanish
+  //   columns), then land here and get renamed in the same run, so they end
+  //   up identical to upgraded installs.
+  // - Existing installs: their data is preserved, only the column names change.
+  // Requires SQLite 3.25+ for ALTER TABLE ... RENAME COLUMN, which the
+  // expo-sqlite versions used here support.
+  if (currentVersion < 4) {
+    db.execSync(`
+      ALTER TABLE decks RENAME COLUMN nombre TO name;
+      ALTER TABLE decks RENAME COLUMN creado_en TO createdAt;
+
+      ALTER TABLE cards RENAME COLUMN deck_id TO deckId;
+      ALTER TABLE cards RENAME COLUMN frente TO front;
+      ALTER TABLE cards RENAME COLUMN reverso TO back;
+      ALTER TABLE cards RENAME COLUMN intervalo TO interval;
+      ALTER TABLE cards RENAME COLUMN facilidad TO easeFactor;
+      ALTER TABLE cards RENAME COLUMN repeticiones TO repetitions;
+      ALTER TABLE cards RENAME COLUMN proximo_repaso TO nextReview;
+      ALTER TABLE cards RENAME COLUMN creado_en TO createdAt;
+    `);
+
+    console.log("🔤 Columns renamed to English (decks/cards).");
+    currentVersion = 4;
+    db.execSync(`PRAGMA user_version = 4;`);
+  }
 }
 
-// 🚨 Se ejecuta al importar el módulo, garantizando las tablas listas
+// 🚨 Runs on module import, guaranteeing the tables are ready
 initDatabase();
