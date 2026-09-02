@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     backfaceVisibility: "hidden",
     width: "80%",
-    height: "60%",
+    height: "85%",
   },
   text: {
     fontSize: 20,

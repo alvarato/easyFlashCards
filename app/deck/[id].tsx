@@ -5,14 +5,15 @@ import {
   Card as CardData,
   getCardsByDeck,
   getDeckById,
-  rateCardSimple
+  rateCardSimple,
 } from "@/components/db/cardsDB";
 import { getSettings, Settings } from "@/components/db/settingsDB";
 import GuessableWord from "@/components/guesseableWord/GuessableWord";
+import { useAlert } from "@/components/shared/alerts/AlertProvider";
 import CustomButton from "@/components/shared/utils/CustomButton";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
@@ -30,19 +31,34 @@ export default function DeckGameScreen() {
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const deckId = Number(id);
+  const showAlert = useAlert();
 
   const [nombreDeck, setNombreDeck] = useState("");
   const [cards, setCards] = useState<CardData[]>([]);
   const [settings, setSettings] = useState<Settings>();
   const [canAdvance, setCanAdvance] = useState(false);
-
   const carruselRef = useRef<CarruselHandle>(null);
+  const [correctCount, setCorrectCount] = useState<number[]>([0, 0]);
+
+  const sumCorrectCount = (flag: boolean) => {
+    setCorrectCount((prev) => {
+      const updated = [...prev];
+      if (flag) {
+        updated[0] += 1;
+      } else {
+        updated[1] += 1;
+      }
+      return updated;
+    });
+  };
 
   const handleFeedback = (result: boolean) => {
+    sumCorrectCount(result);
     setCanAdvance(true);
+
     const index = carruselRef.current?.getIndex();
-    const card:CardData = cards[Number(index)];
-    if (card != null){
+    const card: CardData = cards[Number(index)];
+    if (card != null) {
       rateCardSimple(card.id, result);
     }
   };
@@ -50,6 +66,12 @@ export default function DeckGameScreen() {
   const handleNextCard = () => {
     carruselRef.current?.goNext();
     setCanAdvance(false);
+  };
+
+  const handleFinish = async () => {
+    const title = t("general.total") +" " +correctCount[0]+"/"+cards.length;
+    const confirm = await showAlert(title, "", false);
+    if (confirm) router.back();
   };
 
   useEffect(() => {
@@ -86,6 +108,7 @@ export default function DeckGameScreen() {
           Este deck todavía no tiene tarjetas.
         </Text>
       ) : (
+        <View style={{height:"80%"}}>
         <Carrusel
           ref={carruselRef}
           onlyRead={settings?.read}
@@ -97,10 +120,17 @@ export default function DeckGameScreen() {
             />
           ))}
         />
+        </View>
       )}
-      {canAdvance && (
+      {canAdvance && !(correctCount[0] + correctCount[1] >= cards.length) && (
         <CustomButton text={t("general.next")} onPress={handleNextCard} />
       )}
+      {correctCount[0] + correctCount[1] >= cards.length &&
+        canAdvance &&
+        !settings?.read && (
+          <CustomButton text={t("general.finish")} onPress={handleFinish} />
+        )}
+      <View style={globalStyles.paddingBottom20}></View>
     </View>
   );
 }

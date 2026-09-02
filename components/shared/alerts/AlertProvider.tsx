@@ -4,7 +4,7 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 // 1. Contexto y tipo de función para mostrar la alerta
 const AlertContext = createContext<
-  (title: string, message?: string) => Promise<boolean>
+  (title: string, message?: string, showCancel?: boolean) => Promise<boolean>
 >(() => Promise.resolve(false));
 
 export const AlertProvider = ({ children }: { children: React.ReactNode }) => {
@@ -13,11 +13,18 @@ export const AlertProvider = ({ children }: { children: React.ReactNode }) => {
   const [alert, setAlert] = useState<{
     title: string;
     message?: string;
+    showCancel: boolean;
     resolve: (v: boolean) => void;
   } | null>(null);
 
-  const showAlert = (title: string, message?: string): Promise<boolean> => {
-    return new Promise((resolve) => setAlert({ title, message, resolve }));
+  const showAlert = (
+    title: string,
+    message?: string,
+    showCancel: boolean = true
+  ): Promise<boolean> => {
+    return new Promise((resolve) =>
+      setAlert({ title, message, showCancel, resolve })
+    );
   };
 
   return (
@@ -36,16 +43,18 @@ export const AlertProvider = ({ children }: { children: React.ReactNode }) => {
 
             {/* Contenedor de botones en fila */}
             <View style={styles.buttonRow}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelBtn]}
-                activeOpacity={0.7}
-                onPress={() => {
-                  alert?.resolve(false);
-                  setAlert(null);
-                }}
-              >
-                <Text style={styles.cancelText}>{t("general.cancel")}</Text>
-              </TouchableOpacity>
+              {alert?.showCancel !== false && (
+                <TouchableOpacity
+                  style={[styles.button, styles.cancelBtn]}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    alert?.resolve(false);
+                    setAlert(null);
+                  }}
+                >
+                  <Text style={styles.cancelText}>{t("general.cancel")}</Text>
+                </TouchableOpacity>
+              )}
 
               <TouchableOpacity
                 style={[styles.button, styles.confirmBtn]}

@@ -104,4 +104,14 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 2,
   },
+  paddingBottom20: {
+    paddingBottom:20,
+  }as ViewStyle,
+  bottomContainerH15: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "25%",
+  },
 });

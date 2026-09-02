@@ -54,8 +54,9 @@ const Carrusel = forwardRef<CarruselHandle, CarruselProps>(
       <View style={globalStyles.containerNoPadding}>
         <View style={styles.content}>{items[index]}</View>
 
-        {onlyRead && (
+        
           <View style={styles.controls}>
+          {onlyRead && (
             <Pressable
               onPress={goPrev}
               disabled={index === 0}
@@ -63,11 +64,11 @@ const Carrusel = forwardRef<CarruselHandle, CarruselProps>(
             >
               <Text style={textStyles.textSecondaryL}>{"<"}</Text>
             </Pressable>
-
+            )}
             <Text style={textStyles.textSecondaryL}>
               {index + 1}/{total}
             </Text>
-
+            {onlyRead && (
             <Pressable
               onPress={goNext}
               disabled={index === total - 1}
@@ -78,8 +79,9 @@ const Carrusel = forwardRef<CarruselHandle, CarruselProps>(
             >
               <Text style={textStyles.textSecondaryL}>{">"}</Text>
             </Pressable>
+            )}
           </View>
-        )}
+        
       </View>
     );
   }
@@ -96,16 +98,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     flex: 1,
+    height:"85%"
   },
   controls: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 16,
     gap: 20,
     justifyContent: "center",
     position: "absolute",
-    bottom: 50,
     width: "100%",
+    bottom: 0,
+    height:"15%"
   },
   button: {
     width: 60,
