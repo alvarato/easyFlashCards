@@ -68,6 +68,8 @@
     "save": "Speichern",
     "back": "Zurück",
     "next": "Weiter",
+    "finish": "Beenden",
+    "total": "Gesamt:",
     "copy": {
       "prompt": "Prompt kopieren"
     },

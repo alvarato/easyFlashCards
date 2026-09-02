@@ -68,6 +68,8 @@
     "save": "Salva",
     "back": "Indietro",
     "next": "Avanti",
+    "finish": "Termina",
+    "total": "Totale:",
     "copy": {
       "prompt": "Copia prompt"
     },

@@ -68,8 +68,8 @@
     "save": "Save",
     "back": "Back",
     "next": "Next",
-    "finish":"Finish",
-    "total":"Total:",
+    "finish": "Finish",
+    "total": "Total:",
     "copy": {
       "prompt": "Copy Prompt"
     },

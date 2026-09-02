@@ -68,6 +68,8 @@
     "save": "Guardar",
     "back": "Volver",
     "next": "Siguiente",
+    "finish": "Finalizar",
+    "total": "Total:",
     "copy": {
       "prompt": "Copiar prompt"
     },
