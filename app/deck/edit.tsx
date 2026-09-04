@@ -1,14 +1,13 @@
 import {
-  Stack,
   useFocusEffect,
-  useLocalSearchParams,
-  useRouter,
+  useLocalSearchParams
 } from "expo-router";
 import { useCallback, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 import { ObjetcIdValue } from "@/components/Clases";
 
+import { CommonStackScreen } from "@/components/CommonStackScreen";
 import {
   Card,
   createCard,
@@ -18,17 +17,16 @@ import {
   getCardsByDeck,
   getDeckById,
   renameDeck,
+  swapDeckSides,
 } from "@/components/db/cardsDB";
 import CustomButtom from "@/components/shared/utils/CustomButton";
+import CustomButtonIcon from "@/components/shared/utils/CustomButtonIcon";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
 import QuickForm from "@/components/shared/utils/QuickForm";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { theme } from "@/styles/Theme";
 import { useTranslation } from "react-i18next";
-import { Ionicons } from "@expo/vector-icons";
-import CustomButtonIcon from "@/components/shared/utils/CustomButtonIcon";
-import { CommonStackScreen } from "@/components/CommonStackScreen";
 
 interface CardListItem extends ObjetcIdValue {
   front: string;
@@ -39,9 +37,6 @@ interface CardListItem extends ObjetcIdValue {
 export default function EditDeckScreen() {
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { deckName } = useLocalSearchParams<{ deckName: string }>();
-
-  const router = useRouter();
   const deckId = Number(id);
 
   const [deck, setDeck] = useState<Deck | null>(null);
@@ -103,6 +98,12 @@ export default function EditDeckScreen() {
 
   const handleNameEdit = () => {
     setQuickFormEditName(true);
+    loadData();
+  };
+
+  const handleSwapSides = () => {
+    swapDeckSides(deckId);
+    loadData();
   };
 
   const editName = (fields: string[]) => {
@@ -130,6 +131,12 @@ export default function EditDeckScreen() {
           size={theme.spacing.xl}
           color={theme.colors.tertiary}
           onPress={handleNameEdit} 
+        />
+        <CustomButtonIcon
+          name="swap-horizontal"
+          size={theme.spacing.xl}
+          color={theme.colors.accent}
+          onPress={handleSwapSides} 
         />
       </View>
       <ScrollView style={globalStyles.container}>

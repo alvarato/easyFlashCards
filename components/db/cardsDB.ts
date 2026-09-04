@@ -145,6 +145,18 @@ export function createCardsFromCSV(
   });
 }
 
+// Invierte front <-> back de todas las tarjetas de un mazo
+export function swapDeckSides(deckId: number) {
+  db.withTransactionSync(() => {
+    db.runSync(
+      `UPDATE cards
+       SET front = back, back = front
+       WHERE deckId = ?;`,
+      [deckId],
+    );
+  });
+}
+
 // ---------------------------------------------
 // Study: spaced repetition (simplified SM-2)
 // ---------------------------------------------
