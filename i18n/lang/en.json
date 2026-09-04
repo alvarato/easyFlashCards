@@ -4,7 +4,8 @@
     "title": "Decks",
     "emptyDeck": "No decks available",
     "askDeleteDeck": "Are you sure you want to delete this deck?",
-    "searchPlaceholder": "Search"
+    "searchPlaceholder": "Search",
+    "selectDeck":"Select decks for study"
   },
   "settings": {
     "navigation": "Settings",
@@ -70,6 +71,7 @@
     "next": "Next",
     "finish": "Finish",
     "total": "Total:",
+    "start":"Start",
     "copy": {
       "prompt": "Copy Prompt"
     },

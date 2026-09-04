@@ -6,6 +6,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useAlert } from "../alerts/AlertProvider";
 import CustomButtonIcon from "./CustomButtonIcon";
 import CustomButtonText from "./CustomButtonText";
+import { useState } from "react";
 
 interface Props<T extends ObjetcIdValue> {
   items: T[];
@@ -38,12 +39,21 @@ export function CustomListItem<T extends ObjetcIdValue>({
     return <Text style={textStyles.textPrimaryL}>{emptyMessage}</Text>;
   }
 
+  const [star,setStar] = useState<boolean>(false);
+
   const handleOnDelete = async (item: T) => {
     if (onDelete == null) return;
     if (alertOnDelete == null) return;
     const confirm = await showAlert(alertOnDelete.title, alertOnDelete.text);
     if (confirm) onDelete(item);
   };
+
+  const handleOnStar = (item:T) =>{
+    if(onStar){
+      onStar(item);
+    }
+    
+  }
 
   return (
     <View>
@@ -74,7 +84,7 @@ export function CustomListItem<T extends ObjetcIdValue>({
                     name={starred ? "star" : "star-outline"}
                     size={theme.spacing.l}
                     color={theme.colors.accent}
-                    onPress={() => onStar(item)}
+                    onPress={() => handleOnStar(item)}
                         />
               )}
 

@@ -223,3 +223,14 @@ export function rateCard(cardId: number, rating: Rating) {
     ],
   );
 }
+
+// Obtiene varios mazos por sus IDs (útil para armar el mazo de estudio)
+export function getDecksByIds(deckIds: number[]): Deck[] {
+  if (deckIds.length === 0) return [];
+
+  const placeholders = deckIds.map(() => "?").join(",");
+  return db.getAllSync<Deck>(
+    `SELECT * FROM decks WHERE id IN (${placeholders});`,
+    deckIds,
+  );
+}

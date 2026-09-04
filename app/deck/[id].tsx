@@ -5,12 +5,14 @@ import {
   Card as CardData,
   getCardsByDeck,
   getDeckById,
+  getDecksByIds,
   rateCardSimple,
 } from "@/components/db/cardsDB";
 import { getSettings, Settings } from "@/components/db/settingsDB";
 import GuessableWord from "@/components/guesseableWord/GuessableWord";
 import { useAlert } from "@/components/shared/alerts/AlertProvider";
 import CustomButton from "@/components/shared/utils/CustomButton";
+import { createStudyDeck } from "@/components/studyDeckService";
 import { globalStyles } from "@/styles/Styles";
 import { textStyles } from "@/styles/Texts";
 import { router, useLocalSearchParams } from "expo-router";
@@ -29,8 +31,19 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 
 export default function DeckGameScreen() {
   const { t } = useTranslation();
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const deckId = Number(id);
+  const { id, advance } = useLocalSearchParams<{
+    id: string;
+    advance?: string;
+  }>();
+
+  // Soporta "1" o "1,2,3"
+  const deckIds = id
+    .split(",")
+    .map((v) => Number(v))
+    .filter((v) => !Number.isNaN(v));
+
+  const isAdvance = advance === "true";
+
   const showAlert = useAlert();
 
   const [nombreDeck, setNombreDeck] = useState("");
@@ -69,7 +82,7 @@ export default function DeckGameScreen() {
   };
 
   const handleFinish = async () => {
-    const title = t("general.total") +" " +correctCount[0]+"/"+cards.length;
+    const title = t("general.total") + " " + correctCount[0] + "/" + cards.length;
     const confirm = await showAlert(title, "", false);
     if (confirm) router.back();
   };
@@ -78,13 +91,30 @@ export default function DeckGameScreen() {
     const setting = getSettings();
     setSettings(setting);
 
-    const deck = getDeckById(deckId);
-    setNombreDeck(deck?.name ?? "Deck");
-    const CardsDB = getCardsByDeck(deckId);
+    if (deckIds.length === 0) return;
 
-    if (setting.random) setCards(shuffleArray(CardsDB));
-    else setCards(CardsDB);
-  }, [deckId]);
+    // Título: nombre del mazo si es solo uno, o genérico si son varios
+    if (deckIds.length === 1) {
+      const deck = getDeckById(deckIds[0]);
+      setNombreDeck(deck?.name ?? "Deck");
+    } else {
+      setNombreDeck(t("deck.multipleDecksTitle") ?? "Estudio");
+    }
+
+    let selectedCards: CardData[];
+
+    if (isAdvance) {
+      // Modo avanzado: mazo de estudio priorizando cartas difíciles
+      selectedCards = createStudyDeck(deckIds);
+    } else {
+      // Modo normal: todas las cartas de todos los mazos seleccionados
+      const decks = getDecksByIds(deckIds);
+      selectedCards = decks.flatMap((deck) => getCardsByDeck(deck.id));
+    }
+
+    if (setting.random) setCards(shuffleArray(selectedCards));
+    else setCards(selectedCards);
+  }, [id, advance]);
 
   const getBackCard = (reverso: string): string | React.ReactNode => {
     if (settings?.read) return reverso.replace(/[()]/g, "");
@@ -108,18 +138,18 @@ export default function DeckGameScreen() {
           Este deck todavía no tiene tarjetas.
         </Text>
       ) : (
-        <View style={{height:"80%"}}>
-        <Carrusel
-          ref={carruselRef}
-          onlyRead={settings?.read}
-          items={cards.map((card) => (
-            <Card
-              key={card.id}
-              front={card.front}
-              back={getBackCard(card.back)}
-            />
-          ))}
-        />
+        <View style={{ height: "80%" }}>
+          <Carrusel
+            ref={carruselRef}
+            onlyRead={settings?.read}
+            items={cards.map((card) => (
+              <Card
+                key={card.id}
+                front={card.front}
+                back={getBackCard(card.back)}
+              />
+            ))}
+          />
         </View>
       )}
       {canAdvance && !(correctCount[0] + correctCount[1] >= cards.length) && (

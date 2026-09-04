@@ -1,19 +1,16 @@
 import { alertListItemButton } from "@/components/Clases";
-import {
-  Deck,
-  deleteDeck,
-  getDecks,
-} from "@/components/db/cardsDB";
+import { Deck, deleteDeck, getDecks } from "@/components/db/cardsDB";
+import { getSettings, Settings } from "@/components/db/settingsDB";
+import CustomButton from "@/components/shared/utils/CustomButton";
 import { CustomListItem } from "@/components/shared/utils/CustomListItem";
 import CustomSearchBar from "@/components/shared/utils/CustomSearchBar";
 import { globalStyles } from "@/styles/Styles";
+import { textStyles } from "@/styles/Texts";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
-// CustomListItem espera objetos con { id, value } (ObjetcIdValue).
-// Deck trae { id, nombre, creado_en }, asi que lo adaptamos.
 export type DeckItem = {
   id: number;
   value: string;
@@ -30,26 +27,32 @@ function toDeckItem(deck: Deck): DeckItem {
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const [decks, setDecks] = useState<DeckItem[]>([]); // lista original completa, ya mapeada
+  const [decks, setDecks] = useState<DeckItem[]>([]);
   const [filteredDecks, setFilteredDecks] = useState<DeckItem[]>([]);
+  const [settings, setSettings] = useState<Settings>();
+  const [advanceStudy, setAdvanceStudy] = useState<number[]>([]);
   const router = useRouter();
 
   const loadDecks = useCallback(() => {
-    const todos = getDecks().map(toDeckItem);
-    setDecks(todos);
-    setFilteredDecks(todos);
+    const allDecks = getDecks().map(toDeckItem);
+    setDecks(allDecks);
+    setFilteredDecks(allDecks);
+  }, []);
+
+  const loadSettings = useCallback(() => {
+    const setting = getSettings();
+    setSettings(setting);
   }, []);
 
   const onDeleteAlet: alertListItemButton = {
     title: t("home.askDeleteDeck"),
   };
 
-  // Recarga la lista cada vez que se vuelve a esta pantalla
-  // (por ejemplo, al volver de crear un deck nuevo)
   useFocusEffect(
     useCallback(() => {
       loadDecks();
-    }, [loadDecks]),
+      loadSettings();
+    }, [loadDecks, loadSettings]),
   );
 
   const handleOpen = (item: DeckItem) => {
@@ -75,6 +78,22 @@ export default function HomeScreen() {
     });
   };
 
+  const handleStar = (item: DeckItem) => {
+    setAdvanceStudy((prev) =>
+      prev.includes(item.id)
+        ? prev.filter((id) => id !== item.id)
+        : [...prev, item.id],
+    );
+  };
+
+  const checkIfStarred = (item: DeckItem): boolean => {
+    return advanceStudy.includes(item.id);
+  };
+
+  const startAdvanceStudy = () => {
+    router.push(`/deck/${advanceStudy.join(",")}?advance=true`);
+  };
+
   return (
     <View style={globalStyles.container}>
       <CustomSearchBar
@@ -84,16 +103,33 @@ export default function HomeScreen() {
         placeholder={t("home.searchPlaceholder")}
       />
       <ScrollView>
-        <CustomListItem
-          items={filteredDecks}
-          onOpen={handleOpen}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onShare={handleShare}
-          alertOnDelete={onDeleteAlet}
-          emptyMessage={t("home.emptyDeck")}
-        />
+        {!settings?.advance ? (
+          // Modo Normal: Permite abrir, editar, borrar y compartir
+          <CustomListItem
+            items={filteredDecks}
+            onOpen={handleOpen}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onShare={handleShare}
+            alertOnDelete={onDeleteAlet}
+            emptyMessage={t("home.emptyDeck")}
+          />
+        ) : (
+          <View>
+          <Text style={textStyles.textPrimaryL}>{t("home.selectDeck")}</Text>
+          <CustomListItem
+            items={filteredDecks}
+            onOpen={handleStar}
+            onStar={handleStar}
+            isStarred={checkIfStarred}
+            emptyMessage={t("home.emptyDeck")}
+          />
+          </View>
+        )}
+        
       </ScrollView>
+      {advanceStudy.length > 0 && 
+      <CustomButton text={t("general.start")} onPress={startAdvanceStudy} />}
     </View>
   );
 }
