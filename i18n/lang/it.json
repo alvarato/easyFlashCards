@@ -4,7 +4,8 @@
     "title": "Mazzi",
     "emptyDeck": "Nessun mazzo disponibile",
     "askDeleteDeck": "Sei sicuro di voler eliminare questo mazzo?",
-    "searchPlaceholder": "Cerca"
+    "searchPlaceholder": "Cerca",
+    "selectDeck": "Seleziona i mazzi da studiare"
   },
   "settings": {
     "navigation": "Impostazioni",
@@ -21,10 +22,10 @@
     "scanQR": "Scansiona codice QR",
     "createDeck": "Crea mazzo:",
     "askCancelDeck": "Sei sicuro di voler annullare la creazione del mazzo?",
-    "pasteClipboard": "Incolla negli appunti",
+    "pasteClipboard": "Incolla dagli appunti",
     "exampleNewDeck": "titolo,esempio",
     "insertDeckContent": "Inserisci il contenuto del mazzo",
-    "manualInput": "Incolla / Digita testo",
+    "manualInput": "Incolla / Scrivi testo",
     "form": {
       "title": "Nuovo mazzo"
     },
@@ -48,8 +49,8 @@
     "deckTooLargeForQR": "Il mazzo è troppo grande per generare un codice QR",
     "shareAsQR": "Condividi come codice QR",
     "shareAsCsv": "Condividi come CSV",
-    "noCards": "Nessuna carta in questo mazzo",
-    "deckNotFound": "❌ Error: Mazzo non trovato",
+    "noCards": "Questo mazzo non ha ancora carte",
+    "deckNotFound": "❌ Errore: Mazzo non trovato",
     "newCard": "Nuova carta"
   },
   "quickForm": {
@@ -62,14 +63,15 @@
     }
   },
   "general": {
-    "getCameraPermiss": "Consenti accesso alla fotocamera",
+    "getCameraPermiss": "Consenti l'accesso alla fotocamera",
     "accept": "Accetta",
     "cancel": "Annulla",
     "save": "Salva",
     "back": "Indietro",
     "next": "Avanti",
-    "finish": "Termina",
+    "finish": "Fine",
     "total": "Totale:",
+    "start": "Inizia",
     "copy": {
       "prompt": "Copia prompt"
     },
@@ -80,8 +82,8 @@
       "errorMessage": "Impossibile scaricare il file",
       "dialogTitle": "Scaricato"
     },
-    "error": "❌ Error",
-    "success": "✅ Éxito"
+    "error": "❌ Errore",
+    "success": "✅ Successo"
   },
   "select": {
     "choiceAnOption": "Scegli un'opzione"

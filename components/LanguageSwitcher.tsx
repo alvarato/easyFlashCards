@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { OptionSelect } from "./Clases";
-import { guardarConfig } from "./db/settingsDB";
 import CustomSelect from "./shared/utils/CustomSelect";
+import { saveConfig } from "./db/settingsDB";
 
 const AVAILABLE_LANGUAGES: OptionSelect[] = [
   { label: "Español", value: "es" },
@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
 
   const handleSelectLanguage = (itemValue: string | number) => {
     i18n.changeLanguage(String(itemValue));
-    guardarConfig({ language: String(itemValue) });
+    saveConfig({ language: String(itemValue) });
   };
 
   return (

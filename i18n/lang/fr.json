@@ -3,8 +3,9 @@
     "navigation": "Paquets",
     "title": "Paquets",
     "emptyDeck": "Aucun paquet disponible",
-    "askDeleteDeck": "Voulez-vous vraiment supprimer ce paquet ?",
-    "searchPlaceholder": "Rechercher"
+    "askDeleteDeck": "Es-tu sûr de vouloir supprimer ce paquet ?",
+    "searchPlaceholder": "Rechercher",
+    "selectDeck": "Sélectionne les paquets à étudier"
   },
   "settings": {
     "navigation": "Paramètres",
@@ -13,18 +14,18 @@
       "title": "Cartes",
       "random": "Cartes aléatoires",
       "read": "Mode lecture",
-      "advance": "Algorithme d'apprentissage"
+      "advance": "Algorithme d'étude"
     }
   },
   "newDeck": {
     "navigation": "Nouveau paquet",
     "scanQR": "Scanner le code QR",
     "createDeck": "Créer un paquet :",
-    "askCancelDeck": "Voulez-vous vraiment annuler la création du paquet ?",
+    "askCancelDeck": "Es-tu sûr de vouloir annuler la création du paquet ?",
     "pasteClipboard": "Coller depuis le presse-papiers",
     "exampleNewDeck": "titre,exemple",
-    "insertDeckContent": "Entrer le contenu du paquet",
-    "manualInput": "Coller / Saisir du texte",
+    "insertDeckContent": "Saisis le contenu du paquet",
+    "manualInput": "Coller / Écrire du texte",
     "form": {
       "title": "Nouveau paquet"
     },
@@ -39,17 +40,17 @@
       "newCard": "Nouvelle carte",
       "nameForm": "Nouveau titre",
       "delete": "Supprimer la carte",
-      "askDeleteDeck": "Voulez-vous vraiment supprimer cette carte ?"
+      "askDeleteDeck": "Es-tu sûr de vouloir supprimer cette carte ?"
     },
     "button": {
       "check": "Vérifier",
       "showAnswer": "Afficher la réponse"
     },
-    "deckTooLargeForQR": "Le paquet est trop grand pour générer un code QR",
-    "shareAsQR": "Partager via code QR",
+    "deckTooLargeForQR": "Le paquet est trop volumineux pour générer un code QR",
+    "shareAsQR": "Partager en code QR",
     "shareAsCsv": "Partager en CSV",
-    "noCards": "Aucune carte dans ce paquet pour le moment",
-    "deckNotFound": "❌ Error: Paquet introuvable",
+    "noCards": "Ce paquet ne contient pas encore de cartes",
+    "deckNotFound": "❌ Erreur : Paquet introuvable",
     "newCard": "Nouvelle carte"
   },
   "quickForm": {
@@ -70,20 +71,21 @@
     "next": "Suivant",
     "finish": "Terminer",
     "total": "Total :",
+    "start": "Commencer",
     "copy": {
       "prompt": "Copier le prompt"
     },
     "download": {
       "prompt": "Télécharger le prompt",
       "alertTitle": "Télécharger le fichier",
-      "alertMessage": "Voulez-vous enregistrer le fichier prompt.txt sur votre appareil ?",
-      "errorMessage": "Impossible de télécharger le fichier",
+      "alertMessage": "Veux-tu enregistrer le fichier prompt.txt sur ton appareil ?",
+      "errorMessage": "Le fichier n'a pas pu être téléchargé",
       "dialogTitle": "Téléchargé"
     },
-    "error": "❌ Error",
-    "success": "✅ Éxito"
+    "error": "❌ Erreur",
+    "success": "✅ Succès"
   },
   "select": {
-    "choiceAnOption": "Choisissez une option"
+    "choiceAnOption": "Choisis une option"
   }
 }

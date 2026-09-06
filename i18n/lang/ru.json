@@ -4,7 +4,8 @@
     "title": "Колоды",
     "emptyDeck": "Нет доступных колод",
     "askDeleteDeck": "Вы уверены, что хотите удалить эту колоду?",
-    "searchPlaceholder": "Поиск"
+    "searchPlaceholder": "Поиск",
+    "selectDeck": "Выберите колоды для изучения"
   },
   "settings": {
     "navigation": "Настройки",
@@ -22,9 +23,9 @@
     "createDeck": "Создать колоду:",
     "askCancelDeck": "Вы уверены, что хотите отменить создание колоды?",
     "pasteClipboard": "Вставить из буфера обмена",
-    "exampleNewDeck": "название,пример",
+    "exampleNewDeck": "заголовок,пример",
     "insertDeckContent": "Введите содержимое колоды",
-    "manualInput": "Вставить / Ввести текст",
+    "manualInput": "Вставить / написать текст",
     "form": {
       "title": "Новая колода"
     },
@@ -46,19 +47,19 @@
       "showAnswer": "Показать ответ"
     },
     "deckTooLargeForQR": "Колода слишком большая для создания QR-кода",
-    "shareAsQR": "Поделиться через QR-код",
-    "shareAsCsv": "Поделиться в формате CSV",
+    "shareAsQR": "Поделиться как QR-код",
+    "shareAsCsv": "Поделиться как CSV",
     "noCards": "В этой колоде пока нет карточек",
-    "deckNotFound": "❌ Error: Колода не найдена",
+    "deckNotFound": "❌ Ошибка: Колода не найдена",
     "newCard": "Новая карточка"
   },
   "quickForm": {
     "required": "Это поле обязательно для заполнения",
     "fields": {
       "front": "Лицевая сторона",
-      "back": "Оборотная сторона",
+      "back": "Обратная сторона",
       "nameDeck": "Название колоды",
-      "title": "Название"
+      "title": "Заголовок"
     }
   },
   "general": {
@@ -70,18 +71,19 @@
     "next": "Далее",
     "finish": "Завершить",
     "total": "Итого:",
+    "start": "Начать",
     "copy": {
-      "prompt": "Скопировать промпт"
+      "prompt": "Скопировать запрос"
     },
     "download": {
-      "prompt": "Скачать промпт",
+      "prompt": "Скачать запрос",
       "alertTitle": "Скачать файл",
-      "alertMessage": "Вы хотите сохранить файл prompt.txt на свое устройство?",
+      "alertMessage": "Хотите сохранить файл prompt.txt на своё устройство?",
       "errorMessage": "Не удалось скачать файл",
       "dialogTitle": "Скачано"
     },
-    "error": "❌ Error",
-    "success": "✅ Éxito"
+    "error": "❌ Ошибка",
+    "success": "✅ Успешно"
   },
   "select": {
     "choiceAnOption": "Выберите вариант"

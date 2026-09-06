@@ -4,7 +4,8 @@
     "title": "Stapel",
     "emptyDeck": "Keine Stapel verfügbar",
     "askDeleteDeck": "Möchtest du diesen Stapel wirklich löschen?",
-    "searchPlaceholder": "Suchen"
+    "searchPlaceholder": "Suchen",
+    "selectDeck": "Stapel für das Lernen auswählen"
   },
   "settings": {
     "navigation": "Einstellungen",
@@ -23,8 +24,8 @@
     "askCancelDeck": "Möchtest du die Erstellung des Stapels wirklich abbrechen?",
     "pasteClipboard": "Aus Zwischenablage einfügen",
     "exampleNewDeck": "titel,beispiel",
-    "insertDeckContent": "Stapelinhalt eingeben",
-    "manualInput": "Text einfügen / eingeben",
+    "insertDeckContent": "Gib den Inhalt des Stapels ein",
+    "manualInput": "Text einfügen / schreiben",
     "form": {
       "title": "Neuer Stapel"
     },
@@ -45,11 +46,11 @@
       "check": "Überprüfen",
       "showAnswer": "Antwort anzeigen"
     },
-    "deckTooLargeForQR": "Stapel ist zu groß für einen QR-Code",
+    "deckTooLargeForQR": "Der Stapel ist zu groß, um einen QR-Code zu erzeugen",
     "shareAsQR": "Als QR-Code teilen",
     "shareAsCsv": "Als CSV teilen",
-    "noCards": "Noch keine Karten in diesem Stapel",
-    "deckNotFound": "❌ Error: Stapel nicht gefunden",
+    "noCards": "Dieser Stapel enthält noch keine Karten",
+    "deckNotFound": "❌ Fehler: Stapel nicht gefunden",
     "newCard": "Neue Karte"
   },
   "quickForm": {
@@ -57,7 +58,7 @@
     "fields": {
       "front": "Vorderseite",
       "back": "Rückseite",
-      "nameDeck": "Stapelname",
+      "nameDeck": "Name des Stapels",
       "title": "Titel"
     }
   },
@@ -68,8 +69,9 @@
     "save": "Speichern",
     "back": "Zurück",
     "next": "Weiter",
-    "finish": "Beenden",
+    "finish": "Fertig",
     "total": "Gesamt:",
+    "start": "Start",
     "copy": {
       "prompt": "Prompt kopieren"
     },
@@ -77,13 +79,13 @@
       "prompt": "Prompt herunterladen",
       "alertTitle": "Datei herunterladen",
       "alertMessage": "Möchtest du die Datei prompt.txt auf deinem Gerät speichern?",
-      "errorMessage": "Datei konnte nicht heruntergeladen werden",
+      "errorMessage": "Die Datei konnte nicht heruntergeladen werden",
       "dialogTitle": "Heruntergeladen"
     },
-    "error": "❌ Error",
-    "success": "✅ Éxito"
+    "error": "❌ Fehler",
+    "success": "✅ Erfolg"
   },
   "select": {
-    "choiceAnOption": "Option auswählen"
+    "choiceAnOption": "Wähle eine Option"
   }
 }

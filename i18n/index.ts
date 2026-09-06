@@ -21,7 +21,6 @@ const resources = {
   ru: { translation: ru },
 };
 
-// Idioma por defecto del dispositivo (sin consultar SQLite aún)
 const deviceLanguage = Localization.getLocales()[0]?.languageCode ?? "en";
 
 i18n.use(initReactI18next).init({

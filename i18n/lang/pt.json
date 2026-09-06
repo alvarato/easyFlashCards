@@ -4,7 +4,8 @@
     "title": "Baralhos",
     "emptyDeck": "Nenhum baralho disponível",
     "askDeleteDeck": "Tem certeza de que deseja excluir este baralho?",
-    "searchPlaceholder": "Pesquisar"
+    "searchPlaceholder": "Pesquisar",
+    "selectDeck": "Selecione os baralhos para estudar"
   },
   "settings": {
     "navigation": "Configurações",
@@ -23,8 +24,8 @@
     "askCancelDeck": "Tem certeza de que deseja cancelar a criação do baralho?",
     "pasteClipboard": "Colar da área de transferência",
     "exampleNewDeck": "título,exemplo",
-    "insertDeckContent": "Digitar conteúdo do baralho",
-    "manualInput": "Colar / Digitar texto",
+    "insertDeckContent": "Insira o conteúdo do baralho",
+    "manualInput": "Colar / Escrever texto",
     "form": {
       "title": "Novo baralho"
     },
@@ -45,11 +46,11 @@
       "check": "Verificar",
       "showAnswer": "Mostrar resposta"
     },
-    "deckTooLargeForQR": "O baralho é muito grande para gerar um código QR",
+    "deckTooLargeForQR": "O baralho é grande demais para gerar um código QR",
     "shareAsQR": "Compartilhar como código QR",
     "shareAsCsv": "Compartilhar como CSV",
-    "noCards": "Nenhum cartão neste baralho ainda",
-    "deckNotFound": "❌ Error: Baralho não encontrado",
+    "noCards": "Este baralho ainda não tem cartões",
+    "deckNotFound": "❌ Erro: Baralho não encontrado",
     "newCard": "Novo cartão"
   },
   "quickForm": {
@@ -68,8 +69,9 @@
     "save": "Salvar",
     "back": "Voltar",
     "next": "Próximo",
-    "finish": "Finalizar",
+    "finish": "Concluir",
     "total": "Total:",
+    "start": "Começar",
     "copy": {
       "prompt": "Copiar prompt"
     },
@@ -80,8 +82,8 @@
       "errorMessage": "Não foi possível baixar o arquivo",
       "dialogTitle": "Baixado"
     },
-    "error": "❌ Error",
-    "success": "✅ Éxito"
+    "error": "❌ Erro",
+    "success": "✅ Sucesso"
   },
   "select": {
     "choiceAnOption": "Escolha uma opção"

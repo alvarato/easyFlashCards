@@ -4,7 +4,8 @@
     "title": "Mazos",
     "emptyDeck": "No hay mazos disponibles",
     "askDeleteDeck": "¿Estás seguro de que quieres eliminar este mazo?",
-    "searchPlaceholder": "Buscar"
+    "searchPlaceholder": "Buscar",
+    "selectDeck": "Selecciona los mazos para estudiar"
   },
   "settings": {
     "navigation": "Ajustes",
@@ -70,6 +71,7 @@
     "next": "Siguiente",
     "finish": "Finalizar",
     "total": "Total:",
+    "start": "Comenzar",
     "copy": {
       "prompt": "Copiar prompt"
     },
