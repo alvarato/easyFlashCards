@@ -1,15 +1,22 @@
 import { theme } from "@/styles/Theme";
 import { useRef, useState } from "react";
-import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import AnimatedFeedback, {
-    AnimatedFeedbackHandle,
+  AnimatedFeedbackHandle,
 } from "../AnimatedFeedbackHandle";
 import GuessableWordActions from "./GuessableWordActions";
 import {
-    buildLines,
-    fillWord,
-    isEditable,
-    parseDisplayChars,
+  buildLines,
+  fillWord,
+  isEditable,
+  parseDisplayChars,
 } from "./wordParser";
 import WordSlots from "./WordSlots";
 import { textStyles } from "@/styles/Texts";
@@ -18,9 +25,9 @@ import { globalStyles } from "@/styles/Styles";
 type GuessableWordProps = {
   word: string;
   onComplete?: () => void;
-  textCheck:string;
-  textShowAnswer:string;
-  handleFeedback:(result: boolean) =>void;
+  textCheck: string;
+  textShowAnswer: string;
+  handleFeedback: (result: boolean) => void;
 };
 
 type FeedbackState = "idle" | "correct" | "incorrect";
@@ -30,7 +37,7 @@ export default function GuessableWord({
   onComplete,
   textCheck,
   textShowAnswer,
-  handleFeedback
+  handleFeedback,
 }: GuessableWordProps) {
   const [value, setValue] = useState("");
   const [feedback, setFeedback] = useState<FeedbackState>("idle");
@@ -45,6 +52,24 @@ export default function GuessableWord({
   const letterCount = chars.filter(isEditable).length;
   const lines = buildLines(chars);
 
+  // Letras editables por palabra (cada línea = una palabra)
+  const wordSizes = lines
+    .map((l) => l.filter((c) => c.typedIndex !== null).length)
+    .filter((n) => n > 0);
+
+  // "casagrande" -> "casa grande" (solo para que el teclado vea palabras reales)
+  const withSpaces = (typed: string) => {
+    let out = "";
+    let i = 0;
+    wordSizes.forEach((size, w) => {
+      const part = typed.slice(i, i + size);
+      if (!part) return;
+      out += (w > 0 ? " " : "") + part;
+      i += size;
+    });
+    return out;
+  };
+
   const handleShowAnswer = () => {
     setShowAnswer(!showAnswer);
     handleFeedback(false);
@@ -53,7 +78,10 @@ export default function GuessableWord({
   };
 
   const handleChangeText = (text: string) => {
-    setValue(text.slice(0, letterCount));
+    // Quitamos espacios y cualquier cosa que no sea letra:
+    // los espacios los pone withSpaces, no el usuario.
+    const onlyLetters = text.replace(/[^a-zA-ZÀ-ÿ]/g, "");
+    setValue(onlyLetters.slice(0, letterCount));
     if (feedback !== "idle") setFeedback("idle");
   };
 
@@ -104,29 +132,37 @@ export default function GuessableWord({
             />
             <TextInput
               ref={inputRef}
-              value={value}
+              value={withSpaces(value)}
               onChangeText={handleChangeText}
-              maxLength={letterCount}
+              // OJO: quitamos maxLength={letterCount}. El texto mostrado ahora
+              // incluye espacios y es más largo que letterCount, así que cortaría
+              // las últimas letras. El límite ya lo aplica handleChangeText.
               autoCapitalize="none"
               autoCorrect={false}
+              spellCheck={false}
+              autoComplete="off"
+              importantForAutofill="no"
+              textContentType="none"
+              keyboardType="visible-password"
               style={styles.hiddenInput}
             />
           </Pressable>
         </View>
-        {
-          !sendedFeedback &&
+        {!sendedFeedback && (
           <GuessableWordActions
-          onSend={handleSend}
-          onShowAnswer={handleShowAnswer}
-          firstTry={firstTry}
-          textCheck={textCheck}
-          textShowAnswer={textShowAnswer}
-        />
-        }
-        
+            onSend={handleSend}
+            onShowAnswer={handleShowAnswer}
+            firstTry={firstTry}
+            textCheck={textCheck}
+            textShowAnswer={textShowAnswer}
+          />
+        )}
+
         {showAnswer && (
-        <Text style={[textStyles.textSecondaryL,globalStyles.textCenter]}>{solutionWord}</Text>
-      )}
+          <Text style={[textStyles.textSecondaryL, globalStyles.textCenter]}>
+            {solutionWord}
+          </Text>
+        )}
       </AnimatedFeedback>
     </View>
   );
